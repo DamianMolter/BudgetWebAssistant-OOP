@@ -19,61 +19,65 @@
           </blockquote>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
-          <form class="p-4 p-md-5 border rounded-5 bg-body-tertiary" action="register-verify.php" method="post">
+          <form class="p-4 p-md-5 border rounded-5 bg-body-tertiary" method="POST">
+            <?php include $this->resolve('partials/_csrf.php'); ?>
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="Imię" name="name" value="<?php
-                                                                                                                if (isset($_SESSION['givenName'])) {
-                                                                                                                  echo $_SESSION['givenName'];
-                                                                                                                  unset($_SESSION['givenName']);
-                                                                                                                }
-
-                                                                                                                ?>" />
+              <input type="text"
+                class="form-control"
+                id="floatingInput"
+                placeholder="Imię"
+                name="name"
+                value="<?php echo e($oldFormData['name'] ?? ''); ?>" />
+              <?php if (array_key_exists('name', $errors)) : ?>
+                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <?php echo e($errors['name'][0]); ?>
+                </div>
+              <?php endif; ?>
 
               <label for="floatingInput">Imię</label>
-              <?php
-              if (isset($_SESSION['nameError'])) {
-                echo $_SESSION['nameError'];
-                unset($_SESSION['nameError']);
-              }
-              ?>
+
             </div>
             <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" value="<?php
-                                                                                                                              if (isset($_SESSION['givenEmail'])) {
-                                                                                                                                echo $_SESSION['givenEmail'];
-                                                                                                                                unset($_SESSION['givenEmail']);
-                                                                                                                              }
-                                                                                                                              ?>" />
+              <input type="email"
+                class="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                name="email"
+                value="<?php echo e($oldFormData['email'] ?? ''); ?>" />
+              <?php if (array_key_exists('email', $errors)) : ?>
+                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <?php echo e($errors['email'][0]); ?>
+                </div>
+              <?php endif; ?>
               <label for="floatingInput">Email</label>
-              <?php
-              if (isset($_SESSION['emailError'])) {
-                echo $_SESSION['emailError'];
-                unset($_SESSION['emailError']);
-              }
-              ?>
+
             </div>
             <div class="form-floating mb-3">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Hasło" name="passwordOne" value="<?php
-                                                                                                                              if (isset($_SESSION['givenPasswordOne'])) {
-                                                                                                                                echo $_SESSION['givenPasswordOne'];
-                                                                                                                                unset($_SESSION['givenPasswordOne']);
-                                                                                                                              }
-                                                                                                                              ?>" />
+              <input type="password"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Hasło"
+                name="password"
+                value="" />
+              <?php if (array_key_exists('password', $errors)) : ?>
+                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <?php echo e($errors['password'][0]); ?>
+                </div>
+              <?php endif; ?>
               <label for="floatingPassword">Hasło</label>
             </div>
             <div class="form-floating mb-3">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Powtórz hasło" name="passwordTwo" value="<?php
-                                                                                                                                      if (isset($_SESSION['givenPasswordTwo'])) {
-                                                                                                                                        echo $_SESSION['givenPasswordTwo'];
-                                                                                                                                        unset($_SESSION['givenPasswordTwo']);
-                                                                                                                                      }
-                                                                                                                                      ?>" />
-              <?php
-              if (isset($_SESSION['passwordError'])) {
-                echo $_SESSION['passwordError'];
-                unset($_SESSION['passwordError']);
-              }
-              ?>
+              <input type="password"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Powtórz hasło"
+                name="confirmPassword"
+                value="" />
+              <?php if (array_key_exists('confirmPassword', $errors)) : ?>
+                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <?php echo e($errors['confirmPassword'][0]); ?>
+                </div>
+              <?php endif; ?>
               <label for="floatingPassword">Powtórz hasło</label>
             </div>
             <button class="btn btn-primary px-5 btn-lg rounded-pill text-center mx-3" type="submit">

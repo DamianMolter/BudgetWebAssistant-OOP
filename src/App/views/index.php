@@ -17,20 +17,20 @@
           Zapanuj nad swoimi finansami już dziś!
         </p>
         <div class="d-flex-inline gap-5 mb-5 col-12">
-          <a href="./login.php"><button
+          <a href="/login"><button
               class="btn btn-primary px-5 btn-lg rounded-pill text-center mx-3"
               type="button">
               Logowanie
             </button></a>
 
-          <a href="./register.php"><button
+          <a href="/register"><button
               class="btn btn-primary px-5 btn-lg rounded-pill text-center mx-3"
               type="button">
               Rejestracja
             </button></a>
         </div>
         <?php
-        if (isset($_SESSION['registerSuccessfull'])) {
+        if ($_SESSION['registerSuccessfull']) {
           echo '<p class = "success">Rejestracja zakończona sukcesem! Zaloguj się na Twoje konto!</p>';
           unset($_SESSION['registerSuccessfull']);
         }
@@ -39,15 +39,4 @@
     </div>
   </main>
 
-  <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-    <p class="mb-1">© 2024 By Damian Molter</p>
-  </footer>
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</body>
-
-</html>
+  <?php include $this->resolve("partials/_footer.php"); ?>

@@ -6,14 +6,14 @@ namespace Framework\Rules;
 
 use Framework\Contracts\RuleInterface;
 
-class EmailRule implements RuleInterface
+class NameRule implements RuleInterface
 {
       public function validate(array $data, string $field, array $params): bool
       {
-            return (bool) filter_var($data[$field], FILTER_VALIDATE_EMAIL);
+            return (bool) (strlen($data[$field]) >= 3 && ctype_alpha($data[$field]));
       }
       public function getMessage(array $data, string $field, array $params): string
       {
-            return "Niepoprawny adres email.";
+            return "Podane imię musi składać się wyłącznie z liter i mieć długość co najmniej 3 znaków.";
       }
 }
