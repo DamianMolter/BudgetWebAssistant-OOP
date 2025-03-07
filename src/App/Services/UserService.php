@@ -21,7 +21,7 @@ class UserService
             )->count();
 
             if ($emailCount > 0) {
-                  throw new ValidationException(['email' => 'Email taken.']);
+                  throw new ValidationException(['email' => 'Podany adres email jest już zajęty.']);
             }
       }
 
@@ -30,19 +30,17 @@ class UserService
             $password = password_hash($formData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
 
             $this->db->query(
-                  "INSERT into users(email,password,age,country,social_media_url)
-            VALUES(:email, :password, :age, :country, :url)",
+                  "INSERT into users(username, password, email)
+            VALUES(:username, :password, :email)",
                   [
-                        'email' => $formData['email'],
+                        'username' => $formData['name'],
                         'password' => $password,
-                        'age' => $formData['age'],
-                        'country' => $formData['country'],
-                        'url' => $formData['socialMediaURL']
+                        'email' => $formData['email']
                   ]
             );
 
             session_regenerate_id();
-            $_SESSION['user'] = $this->db->id();
+            $_SESSION['registerSuccessfull'] = true;
       }
 
       public function login(array $formData)
