@@ -1,4 +1,4 @@
-<?php include $this->resolve("../partials/_header.php"); ?>
+<?php include $this->resolve("partials/_header.php"); ?>
 
 <body>
 
@@ -32,13 +32,7 @@
                 <label for="address" class="form-label">Kwota</label>
                 <div class="input-group">
                   <input type="number" min="0" step="5" class="form-control"
-                    aria-label="Cash amount (with dot and two decimal places)" name="amount" value="<?php
-                                                                                                    if (isset($_SESSION['inputError'])) {
-                                                                                                      echo $_SESSION['givenAmount'];
-                                                                                                      unset($_SESSION['givenAmount']);
-                                                                                                      unset($_SESSION['inputError']);
-                                                                                                    }
-                                                                                                    ?>" />
+                    aria-label="Cash amount (with dot and two decimal places)" name="amount" value="" />
                   <span class="input-group-text">zł</span>
                 </div>
               </div>
@@ -53,20 +47,6 @@
                 <label for="state" class="form-label">Kategoria</label>
                 <select class="form-select" id="state" required="" name="incomeCategory">
                   <option value="0">Wybierz kategorię</option>
-                  <?php
-
-                  require_once 'connect.php';
-                  $loadIncomeCategoriesQuery = $db->prepare('SELECT id, name FROM incomes_category_assigned_to_users
-                                                                WHERE user_id=:userId');
-                  $loadIncomeCategoriesQuery->bindValue(':userId', $_SESSION['loggedUserId'], PDO::PARAM_INT);
-                  $loadIncomeCategoriesQuery->execute();
-
-                  $incomeCategories = $loadIncomeCategoriesQuery->fetchAll();
-
-                  foreach ($incomeCategories as $incomeCategory) {
-                    echo '<option value = "' . $incomeCategory['id'] . '">' . $incomeCategory['name'] . '</option>';
-                  }
-                  ?>
 
                 </select>
                 <div class="invalid-feedback">Wybierz jedną z opcji</div>
@@ -88,4 +68,4 @@
       </div>
     </main>
 
-    <?php include $this->resolve("../partials/_footer.php"); ?>
+    <?php include $this->resolve("partials/_footer.php"); ?>

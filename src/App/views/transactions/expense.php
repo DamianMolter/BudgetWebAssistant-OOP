@@ -1,4 +1,4 @@
-<?php include $this->resolve("../partials/_header.php"); ?>
+<?php include $this->resolve("partials/_header.php"); ?>
 
 <body>
 
@@ -34,13 +34,7 @@
                 <label for="address" class="form-label">Kwota</label>
                 <div class="input-group">
                   <input type="number" min="0" step="5" class="form-control"
-                    aria-label="Cash amount (with dot and two decimal places)" name="amount" value="<?php
-                                                                                                    if (isset($_SESSION['inputError'])) {
-                                                                                                      echo $_SESSION['givenAmount'];
-                                                                                                      unset($_SESSION['givenAmount']);
-                                                                                                      unset($_SESSION['inputError']);
-                                                                                                    }
-                                                                                                    ?>" />
+                    aria-label="Cash amount (with dot and two decimal places)" name="amount" value="" />
                   <span class="input-group-text">zł</span>
                 </div>
               </div>
@@ -54,20 +48,6 @@
                 <label for="country" class="form-label">Sposób płatności</label>
                 <select class="form-select" id="country" required="" name="paymentMethod">
                   <option value="0">Wybierz metodę płatności</option>
-                  <?php
-
-                  require_once 'connect.php';
-                  $loadPaymentMethodsQuery = $db->prepare('SELECT id, name FROM payment_methods_assigned_to_users
-                                                                WHERE user_id=:userId');
-                  $loadPaymentMethodsQuery->bindValue(':userId', $_SESSION['loggedUserId'], PDO::PARAM_INT);
-                  $loadPaymentMethodsQuery->execute();
-
-                  $paymentMethods = $loadPaymentMethodsQuery->fetchAll();
-
-                  foreach ($paymentMethods as $paymentMethod) {
-                    echo '<option value = "' . $paymentMethod['id'] . '">' . $paymentMethod['name'] . '</option>';
-                  }
-                  ?>
                 </select>
               </div>
 
@@ -75,20 +55,6 @@
                 <label for="state" class="form-label">Kategoria</label>
                 <select class="form-select" id="state" required="" name="expenseCategory">
                   <option value="0">Wybierz kategorię</option>
-                  <?php
-
-                  require_once 'connect.php';
-                  $loadExpenseCategoriesQuery = $db->prepare('SELECT id, name FROM expenses_category_assigned_to_users
-                                                                WHERE user_id=:userId');
-                  $loadExpenseCategoriesQuery->bindValue(':userId', $_SESSION['loggedUserId'], PDO::PARAM_INT);
-                  $loadExpenseCategoriesQuery->execute();
-
-                  $expenseCategories = $loadExpenseCategoriesQuery->fetchAll();
-
-                  foreach ($expenseCategories as $expenseCategory) {
-                    echo '<option value = "' . $expenseCategory['id'] . '">' . $expenseCategory['name'] . '</option>';
-                  }
-                  ?>
                 </select>
                 <div class="invalid-feedback">Wybierz jedną z opcji</div>
               </div>
@@ -109,4 +75,4 @@
       </div>
     </main>
 
-    <?php include $this->resolve("../partials/_footer.php"); ?>
+    <?php include $this->resolve("partials/_footer.php"); ?>

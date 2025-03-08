@@ -8,12 +8,12 @@
                   <ul class="dropdown-menu">
                         <li>
                               <button class="dropdown-item" type="button">
-                                    <a href="./income.php" class="nav-link py-3">Dodaj przychód</a>
+                                    <a href="/income" class="nav-link py-3">Dodaj przychód</a>
                               </button>
                         </li>
                         <li>
                               <button class="dropdown-item" type="button">
-                                    <a href="./expense.php" class="nav-link py-3">Dodaj wydatek</a>
+                                    <a href="/expense" class="nav-link py-3">Dodaj wydatek</a>
                               </button>
                         </li>
                         <li>
@@ -38,10 +38,10 @@
             <div class="d-flex justify-content-center align-items-center py-3 dark-green">
                   <ul class="nav nav-pills">
                         <li class="nav-item">
-                              <a href="./income.php" class="nav-link py-3">Dodaj przychód</a>
+                              <a href="/income" class="nav-link py-3">Dodaj przychód</a>
                         </li>
                         <li class="nav-item">
-                              <a href="./expense.php" class="nav-link py-3">Dodaj wydatek</a>
+                              <a href="/expense" class="nav-link py-3">Dodaj wydatek</a>
                         </li>
                         <li class="nav-item">
                               <a href="./summary-current-month.php" class="nav-link py-3">Przeglądaj bilans</a>
