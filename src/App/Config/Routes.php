@@ -7,6 +7,7 @@ namespace App\Config;
 use Framework\App;
 use App\Controllers\{
       WelcomeController,
+      SummaryController,
       HomeController,
       AboutController,
       AuthController,
@@ -20,6 +21,7 @@ use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
 function registerRoutes(App $app)
 {
       $app->get('/', [WelcomeController::class, 'welcome'])->add(GuestOnlyMiddleware::class);
+      $app->get('/summary', [SummaryController::class, 'summary'])->add(AuthRequiredMiddleware::class);
       $app->get('/about', [AboutController::class, 'about']);
       $app->get('/register', [AuthController::class, 'registerView'])->add(GuestOnlyMiddleware::class);
       $app->post('/register', [AuthController::class, 'register'])->add(GuestOnlyMiddleware::class);

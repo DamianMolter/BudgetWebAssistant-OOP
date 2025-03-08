@@ -19,31 +19,36 @@
           </blockquote>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
-          <form action="login-verify.php" class="p-4 p-md-5 border rounded-5 bg-body-tertiary" method="post">
+          <form class="p-4 p-md-5 border rounded-5 bg-body-tertiary" method="POST">
+            <?php include $this->resolve('partials/_csrf.php'); ?>
             <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" value="<?php
-                                                                                                                              if (isset($_SESSION['loginError'])) {
-                                                                                                                                echo $_SESSION['loginEmail'];
-                                                                                                                                unset($_SESSION['loginEmail']);
-                                                                                                                              }
-                                                                                                                              ?>" />
+              <input type="email"
+                class="form-control"
+                id="floatingInput"
+                placeholder="name@example.com"
+                name="email"
+                value="<?php echo e($oldFormData['email'] ?? ''); ?>" />
+              <?php if (array_key_exists('email', $errors)) : ?>
+                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <?php echo e($errors['email'][0]); ?>
+                </div>
+              <?php endif; ?>
               <label for="floatingInput">Email</label>
             </div>
             <div class="form-floating mb-3">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Hasło" name="password" value="<?php
-                                                                                                                            if (isset($_SESSION['loginError'])) {
-                                                                                                                              echo $_SESSION['loginPassword'];
-                                                                                                                              unset($_SESSION['loginPassword']);
-                                                                                                                            }
-                                                                                                                            ?>" />
+              <input type="password"
+                class="form-control"
+                id="floatingPassword"
+                placeholder="Hasło"
+                name="password"
+                value="" />
+              <?php if (array_key_exists('password', $errors)) : ?>
+                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <?php echo e($errors['password'][0]); ?>
+                </div>
+              <?php endif; ?>
               <label for="floatingPassword">Hasło</label>
             </div>
-            <?php
-            if (isset($_SESSION['loginError'])) {
-              echo "<span class='error'>Błędne dane logowania!</span>";
-              unset($_SESSION['loginError']);
-            }
-            ?>
             <button class="btn btn-primary px-5 btn-lg rounded-pill text-center mx-3" type="submit">
               Zaloguj się
             </button>
