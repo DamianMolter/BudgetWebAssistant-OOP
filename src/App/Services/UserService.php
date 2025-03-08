@@ -21,7 +21,7 @@ class UserService
             )->count();
 
             if ($emailCount > 0) {
-                  throw new ValidationException(['email' => 'Podany adres email jest już zajęty.']);
+                  throw new ValidationException(['email' => ['Podany adres email jest już zajęty.']]);
             }
       }
 
