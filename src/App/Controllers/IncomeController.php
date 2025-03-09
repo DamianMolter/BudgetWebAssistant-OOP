@@ -31,7 +31,7 @@ class IncomeController
 
             $this->incomeService->create($_POST);
 
-            redirectTo('/');
+            redirectTo('/income');
       }
 
       public function editView(array $params)

@@ -33,7 +33,7 @@ class ExpenseController
 
             $this->expenseService->create($_POST);
 
-            redirectTo('/');
+            redirectTo('/expense');
       }
 
       public function editView(array $params)
