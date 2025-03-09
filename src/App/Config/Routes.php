@@ -11,6 +11,8 @@ use App\Controllers\{
       HomeController,
       AboutController,
       AuthController,
+      IncomeController,
+      ExpenseController,
       TransactionController,
       ReceiptController,
       ErrorController
@@ -28,9 +30,10 @@ function registerRoutes(App $app)
       $app->get('/login', [AuthController::class, 'loginView'])->add(GuestOnlyMiddleware::class);
       $app->post('/login', [AuthController::class, 'login'])->add(GuestOnlyMiddleware::class);
       $app->get('/logout', [AuthController::class, 'logout'])->add(AuthRequiredMiddleware::class);
-      $app->get('/transaction', [TransactionController::class, 'createView'])->add(AuthRequiredMiddleware::class);
-      $app->get('/transaction', [TransactionController::class, 'createView'])->add(AuthRequiredMiddleware::class);
-      $app->post('/transaction', [TransactionController::class, 'create'])->add(AuthRequiredMiddleware::class);
+      $app->get('/income', [IncomeController::class, 'createView'])->add(AuthRequiredMiddleware::class);
+      $app->post('/income', [IncomeController::class, 'create'])->add(AuthRequiredMiddleware::class);
+      $app->get('/expense', [ExpenseController::class, 'createView'])->add(AuthRequiredMiddleware::class);
+      $app->post('/expense', [ExpenseController::class, 'create'])->add(AuthRequiredMiddleware::class);
       $app->get('/transaction/{transaction}/', [TransactionController::class, 'editView'])->add(AuthRequiredMiddleware::class);
       $app->post('/transaction/{transaction}/', [TransactionController::class, 'edit'])->add(AuthRequiredMiddleware::class);
       $app->delete('/transaction/{transaction}/', [TransactionController::class, 'delete'])->add(AuthRequiredMiddleware::class);
