@@ -48,6 +48,9 @@
                 <label for="country" class="form-label">Sposób płatności</label>
                 <select class="form-select" id="country" required="" name="paymentMethod">
                   <option value="0">Wybierz metodę płatności</option>
+                  <?php foreach ($userPaymentMethods as $userPaymentMethod) : ?>
+                    <option value="<?php echo e($userPaymentMethod['id']); ?>"><?php echo e($userPaymentMethod['name']); ?></option>
+                  <?php endforeach; ?>
                 </select>
               </div>
 
@@ -55,6 +58,9 @@
                 <label for="state" class="form-label">Kategoria</label>
                 <select class="form-select" id="state" required="" name="expenseCategory">
                   <option value="0">Wybierz kategorię</option>
+                  <?php foreach ($userExpenseCategories as $userExpenseCategory) : ?>
+                    <option value="<?php echo e($userExpenseCategory['id']); ?>"><?php echo e($userExpenseCategory['name']); ?></option>
+                  <?php endforeach; ?>
                 </select>
                 <div class="invalid-feedback">Wybierz jedną z opcji</div>
               </div>

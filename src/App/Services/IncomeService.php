@@ -116,4 +116,14 @@ class IncomeService
                   ]
             );
       }
+
+      public function getUserIncomeCategories()
+      {
+            $userIncomeCategories = $this->db->query("SELECT id, name FROM incomes_category_assigned_to_users 
+            WHERE user_id = :user_id", [
+                  'user_id' => $_SESSION['user']
+            ])->findAll();
+
+            return $userIncomeCategories;
+      }
 }

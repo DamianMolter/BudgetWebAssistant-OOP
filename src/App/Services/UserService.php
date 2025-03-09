@@ -45,6 +45,7 @@ class UserService
 
             $incomeCategories = $this->db->query("SELECT * FROM incomes_category_default", [])->findAll();
             $expenseCategories = $this->db->query("SELECT * FROM expenses_category_default", [])->findAll();
+            $paymentMethods = $this->db->query("SELECT * FROM payment_methods_default", [])->findAll();
 
             foreach ($incomeCategories as $incomeCategory) {
                   $this->db->query(
@@ -66,6 +67,14 @@ class UserService
                               'name' => $expenseCategory['name']
                         ]
                   );
+            }
+
+            foreach ($paymentMethods as $paymentMethod) {
+                  $this->db->query("INSERT INTO payment_methods_assigned_to_users(user_id, name)
+                  VALUES (:user_id, :name)", [
+                        'user_id' => $newUserId['id'],
+                        'name' => $paymentMethod['name']
+                  ]);
             }
 
             session_regenerate_id();

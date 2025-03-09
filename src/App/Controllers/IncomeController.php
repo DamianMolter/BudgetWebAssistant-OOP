@@ -18,7 +18,11 @@ class IncomeController
 
       public function createView()
       {
-            echo $this->view->render("transactions/income.php");
+            $userIncomeCategories = $this->incomeService->getUserIncomeCategories();
+
+            echo $this->view->render("transactions/income.php", [
+                  'userIncomeCategories' => $userIncomeCategories
+            ]);
       }
 
       public function create()

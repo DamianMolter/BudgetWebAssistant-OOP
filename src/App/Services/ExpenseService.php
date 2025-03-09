@@ -116,4 +116,24 @@ class ExpenseService
                   ]
             );
       }
+
+      public function getUserExpenseCategories()
+      {
+            $userExpenseCategories = $this->db->query("SELECT id, name FROM expenses_category_assigned_to_users 
+            WHERE user_id = :user_id", [
+                  'user_id' => $_SESSION['user']
+            ])->findAll();
+
+            return $userExpenseCategories;
+      }
+
+      public function getUserPaymentMethods()
+      {
+            $userPaymentMethods = $this->db->query("SELECT id, name FROM payment_methods_assigned_to_users 
+            WHERE user_id = :user_id", [
+                  'user_id' => $_SESSION['user']
+            ])->findAll();
+
+            return $userPaymentMethods;
+      }
 }

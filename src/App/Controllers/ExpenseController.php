@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Framework\TemplateEngine;
-use App\Services\{ValidatorService, IncomeService};
+use App\Services\{ExpenseService, ValidatorService, IncomeService};
 use Framework\Validator;
 
 class ExpenseController
@@ -13,12 +13,18 @@ class ExpenseController
       public function __construct(
             private TemplateEngine $view,
             private ValidatorService $validatorService,
-            private IncomeService $expenseService
+            private ExpenseService $expenseService
       ) {}
 
       public function createView()
       {
-            echo $this->view->render("transactions/expense.php");
+            $userExpenseCategories = $this->expenseService->getUserExpenseCategories();
+            $userPaymentMethods = $this->expenseService->getUserPaymentMethods();
+
+            echo $this->view->render("transactions/expense.php", [
+                  'userExpenseCategories' => $userExpenseCategories,
+                  'userPaymentMethods' => $userPaymentMethods
+            ]);
       }
 
       public function create()

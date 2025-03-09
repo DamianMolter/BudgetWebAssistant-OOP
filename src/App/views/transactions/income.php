@@ -47,6 +47,11 @@
                 <label for="state" class="form-label">Kategoria</label>
                 <select class="form-select" id="state" required="" name="incomeCategory">
                   <option value="0">Wybierz kategorię</option>
+                  <?php foreach ($userIncomeCategories as $userIncomeCategory) : ?>
+                    <option value="<?php echo e($userIncomeCategory['id']); ?>">
+                      <?php echo e($userIncomeCategory['name']); ?>
+                    </option>
+                  <?php endforeach; ?>
 
                 </select>
                 <div class="invalid-feedback">Wybierz jedną z opcji</div>
