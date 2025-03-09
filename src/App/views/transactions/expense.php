@@ -10,18 +10,12 @@
         <h2>Dodaj wydatek</h2>
       </div>
 
-      <?php
-      if (isset($_SESSION['success'])) {
-        echo '<div class = "action-status"><p class = "success">Wydatek został pomyślnie dodany!</p></div>';
-        unset($_SESSION['success']);
-      }
-
-
-      if (isset($_SESSION['inputError'])) {
-        echo '<div class = "action-status"><p class= "error">Podano błędne lub niekompletne informacje!</p></div>';
-        unset($_SESSION['inputError']);
-      }
-      ?>
+      <?php if (isset($_SESSION['success'])) : ?>
+        <div class="action-status">
+          <p class="success">Wydatek został pomyślnie dodany!</p>
+        </div>
+      <?php unset($_SESSION['success']);
+      endif; ?>
 
 
 
@@ -86,7 +80,7 @@
 
             <div class="form-group py-5">
               <label for="address" class="form-label">Komentarz(opcjonalnie)</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="expenseComment"></textarea>
             </div>
             <button class="w-100 btn btn-primary btn-lg" type="submit">
               Zapisz

@@ -12,20 +12,28 @@ class IncomeService
 
       public function create(array $formData)
       {
-
-            $formattedDate = "{$formData['date']} 00:00:00";
-
             $this->db->query(
-                  "INSERT INTO transactions(user_id, description, amount, date)
-            VALUES(:user_id, :description, :amount, :date)",
+                  "INSERT INTO incomes(user_id, 
+                  income_category_assigned_to_user_id, 
+                  amount, 
+                  date_of_income, 
+                  income_comment)
+            VALUES(:user_id, 
+                  :income_category_assigned_to_user_id, 
+                  :amount, 
+                  :date_of_income, 
+                  :income_comment)",
 
                   [
                         'user_id' => $_SESSION['user'],
-                        'description' => $formData['description'],
+                        'income_category_assigned_to_user_id' => $formData['incomeCategory'],
                         'amount' => $formData['amount'],
-                        'date' => $formattedDate
+                        'date_of_income' => $formData['date'],
+                        'income_comment' => $formData['incomeComment']
                   ]
             );
+
+            $_SESSION['success'] = true;
       }
 
       public function getUserTransactions(int $length, int $offset)
