@@ -39,6 +39,35 @@ class UserService
                   ]
             );
 
+            $newUserId = $this->db->query("SELECT id FROM users where email = :email", [
+                  'email' => $formData['email']
+            ])->find();
+
+            $incomeCategories = $this->db->query("SELECT * FROM incomes_category_default", [])->findAll();
+            $expenseCategories = $this->db->query("SELECT * FROM expenses_category_default", [])->findAll();
+
+            foreach ($incomeCategories as $incomeCategory) {
+                  $this->db->query(
+                        "INSERT into incomes_category_assigned_to_users(user_id, name)
+                  VALUES(:user_id, :name)",
+                        [
+                              'user_id' => $newUserId['id'],
+                              'name' => $incomeCategory['name']
+                        ]
+                  );
+            }
+
+            foreach ($expenseCategories as $expenseCategory) {
+                  $this->db->query(
+                        "INSERT into expenses_category_assigned_to_users(user_id, name)
+                  VALUES(:user_id, :name)",
+                        [
+                              'user_id' => $newUserId['id'],
+                              'name' => $expenseCategory['name']
+                        ]
+                  );
+            }
+
             session_regenerate_id();
             $_SESSION['registerSuccessfull'] = true;
       }

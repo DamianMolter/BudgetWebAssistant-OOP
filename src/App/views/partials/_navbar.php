@@ -18,7 +18,7 @@
                         </li>
                         <li>
                               <button class="dropdown-item" type="button">
-                                    <a href="./summary-current-month.php" class="nav-link py-3">Przeglądaj bilans</a>
+                                    <a href="/summary" class="nav-link py-3">Przeglądaj bilans</a>
                               </button>
                         </li>
                         <li>
@@ -44,7 +44,7 @@
                               <a href="/expense" class="nav-link py-3">Dodaj wydatek</a>
                         </li>
                         <li class="nav-item">
-                              <a href="./summary-current-month.php" class="nav-link py-3">Przeglądaj bilans</a>
+                              <a href="/summary" class="nav-link py-3">Przeglądaj bilans</a>
                         </li>
                         <li class="nav-item">
                               <a href="#" class="nav-link py-3">Ustawienia</a>
