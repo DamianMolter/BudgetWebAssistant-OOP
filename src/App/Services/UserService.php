@@ -99,6 +99,7 @@ class UserService
             session_regenerate_id();
 
             $_SESSION['user'] = $user['id'];
+            $_SESSION['userName'] = $user['username'];
       }
 
       public function logout()

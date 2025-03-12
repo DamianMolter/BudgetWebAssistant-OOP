@@ -6,12 +6,7 @@
 
   <header>
     <div class="text-center pt-5">
-      <h1><?php
-
-          if (isset($_SESSION['loggedUserName'])) {
-            echo 'Witaj ' . $_SESSION['loggedUserName'] . ', ';
-          }
-          ?>oto twój Bilans</h1>
+      <h1>Witaj <?php echo $_SESSION['userName']; ?>, oto twój Bilans</h1>
     </div>
   </header>
 
@@ -77,39 +72,36 @@
             <td>Kwota (PLN)</td>
           </tr>
           <?php
-          require_once 'connect.php';
-          $incomeSummaryQuery = $db->prepare('SELECT name, SUM(amount) AS amountSum FROM incomes
-INNER JOIN incomes_category_assigned_to_users ON incomes_category_assigned_to_users.id=incomes.income_category_assigned_to_user_id
-WHERE incomes.user_id = :loggedUserId AND incomes.date_of_income BETWEEN :beginDate AND :endDate
-GROUP BY name
-ORDER BY amountSUM DESC');
-          $incomeSummaryQuery->bindValue(':loggedUserId', $_SESSION['loggedUserId'], PDO::PARAM_INT);
-          $incomeSummaryQuery->bindValue(':beginDate', $_SESSION['beginDate'], PDO::PARAM_STR);
-          $incomeSummaryQuery->bindValue(':endDate', $_SESSION['endDate'], PDO::PARAM_STR);
-          $incomeSummaryQuery->execute();
-
-          $results = $incomeSummaryQuery->fetchAll();
-          $howMany = $incomeSummaryQuery->rowCount();
-
-          $oddOrEven = true;
           $incomeCategoriesSum = 0;
-          foreach ($results as $result) {
-            if ($oddOrEven) {
-              echo '<tr class="even-row"><td class="icategory">' . $result['name'] . '</td><td class="icategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = false;
-              $incomeCategoriesSum += $result['amountSum'];
-            } else {
-              echo '<tr class="odd-row"><td class="icategory">' . $result['name'] . '</td><td class="icategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = true;
-              $incomeCategoriesSum += $result['amountSum'];
-            }
-          }
-          if ($oddOrEven) {
-            echo '<tr class="even-row"><td>Suma</td><td>' . $incomeCategoriesSum . '</td></tr>';
-          } else {
-            echo '<tr class="odd-row col-title"><td>Suma</td><td>' . $incomeCategoriesSum . '</td></tr>';
-          }
-          ?>
+          $oddOrEven = true;
+          foreach ($currentMonthIncomes as $currentMonthIncome) : ?>
+            <?php if ($oddOrEven) : ?>
+              <tr class="even-row">
+                <td class="icategory"> <?php echo $currentMonthIncome['name']; ?></td>
+                <td class="icategory-amount"><?php echo $currentMonthIncome['amountSum']; ?> </td>
+              </tr>
+              <?php $oddOrEven = !$oddOrEven;
+              $incomeCategoriesSum += $currentMonthIncome['amountSum']; ?>
+            <?php else: ?>
+              <tr class="odd-row">
+                <td class="icategory"><?php echo $currentMonthIncome['name']; ?></td>
+                <td class="icategory-amount"> <?php echo $currentMonthIncome['amountSum']; ?></td>
+              </tr>
+            <?php $oddOrEven = !$oddOrEven;
+              $incomeCategoriesSum += $currentMonthIncome['amountSum'];
+            endif; ?>
+
+          <?php endforeach; ?>
+
+          <?php if (!$oddOrEven): ?>
+            <tr class="odd-row col-title">
+            <?php else: ?>
+            <tr class="even-row col-title">
+            <?php endif; ?>
+            <td>Suma</td>
+            <td><?php echo $incomeCategoriesSum; ?></td>
+            </tr>
+
         </table>
       </div>
       <div class="text-center">
@@ -120,45 +112,38 @@ ORDER BY amountSUM DESC');
             <td>Kwota (PLN)</td>
           </tr>
           <?php
-          require_once 'connect.php';
-          $expenseSummaryQuery = $db->prepare('SELECT name, SUM(amount) AS amountSum FROM expenses
-INNER JOIN expenses_category_assigned_to_users ON expenses_category_assigned_to_users.id=expenses.expense_category_assigned_to_user_id
-WHERE expenses.user_id = :loggedUserId AND expenses.date_of_expense BETWEEN :beginDate AND :endDate
-GROUP BY name
-ORDER BY amountSUM DESC');
-          $expenseSummaryQuery->bindValue(':loggedUserId', $_SESSION['loggedUserId'], PDO::PARAM_INT);
-          $expenseSummaryQuery->bindValue(':beginDate', $_SESSION['beginDate'], PDO::PARAM_STR);
-          $expenseSummaryQuery->bindValue(':endDate', $_SESSION['endDate'], PDO::PARAM_STR);
-          $expenseSummaryQuery->execute();
-
-          $results = $expenseSummaryQuery->fetchAll();
-          $howMany = $expenseSummaryQuery->rowCount();
-
           $oddOrEven = true;
           $expenseCategoriesSum = 0;
-          foreach ($results as $result) {
-            if ($oddOrEven) {
-              echo '<tr class="even-row"><td class="ecategory">' . $result['name'] . '</td><td class="ecategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = false;
-              $expenseCategoriesSum += $result['amountSum'];
-            } else {
-              echo '<tr class="odd-row"><td class="ecategory">' . $result['name'] . '</td><td class="ecategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = true;
-              $expenseCategoriesSum += $result['amountSum'];
-            }
-          }
-          if ($oddOrEven) {
-            echo '<tr class="even-row col-title"><td>Suma</td><td>' . $expenseCategoriesSum . '</td></tr>';
-          } else {
-            echo '<tr class="odd-row col-title"><td>Suma</td><td>' . $expenseCategoriesSum . '</td></tr>';
-          }
-          $finalBalance = $incomeCategoriesSum - $expenseCategoriesSum;
-          ?>
+          foreach ($currentMonthExpenses as $currentMonthExpense) : ?>
+            <?php if ($oddOrEven) : ?>
+              <tr class="even-row">
+                <td class="ecategory"> <?php echo $currentMonthExpense['name']; ?></td>
+                <td class="ecategory-amount"><?php echo $currentMonthExpense['amountSum']; ?> </td>
+              </tr>
+              <?php $oddOrEven = !$oddOrEven;
+              $expenseCategoriesSum += $currentMonthExpense['amountSum']; ?>
+            <?php else: ?>
+              <tr class="odd-row">
+                <td class="ecategory"><?php echo $currentMonthExpense['name']; ?></td>
+                <td class="ecategory-amount"> <?php echo $currentMonthExpense['amountSum']; ?></td>
+              </tr>
+            <?php $oddOrEven = !$oddOrEven;
+              $expenseCategoriesSum += $currentMonthExpense['amountSum'];
+            endif; ?>
+          <?php endforeach; ?>
+          <?php if (!$oddOrEven): ?>
+            <tr class="odd-row col-title">
+            <?php else: ?>
+            <tr class="even-row col-title">
+            <?php endif; ?>
+            <td>Suma</td>
+            <td><?php echo $expenseCategoriesSum; ?></td>
+            </tr>
         </table>
         <div class="table"></div>
       </div>
     </div>
-
+    <?php $finalBalance = $incomeCategoriesSum - $expenseCategoriesSum; ?>
     <div class="container text-center py-5">
       <h6>
         Twój bilans wynosi <?php echo $finalBalance; ?> PLN!
