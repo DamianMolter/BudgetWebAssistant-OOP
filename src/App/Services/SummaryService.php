@@ -10,13 +10,9 @@ class SummaryService
 {
       public function __construct(private Database $db) {}
 
-      public function getCurrentMonthIncomes()
+      public function getUserIncomes($beginDate, $endDate)
       {
-
-            $beginDate = date('Y-m-01');
-            $endDate = date('Y-m-d');
-
-            $currentMonthIncomes = $this->db->query("SELECT name, SUM(amount) AS amountSum FROM incomes
+            $userIncomes = $this->db->query("SELECT name, SUM(amount) AS amountSum FROM incomes
                               INNER JOIN incomes_category_assigned_to_users 
                               ON incomes_category_assigned_to_users.id=incomes.income_category_assigned_to_user_id
                               WHERE incomes.user_id = :loggedUserId 
@@ -28,16 +24,12 @@ class SummaryService
                   'endDate' => $endDate
             ])->findAll();
 
-            return $currentMonthIncomes;
+            return $userIncomes;
       }
 
-      public function getCurrentMonthExpenses()
+      public function getUserExpenses($beginDate, $endDate)
       {
-
-            $beginDate = date('Y-m-01');
-            $endDate = date('Y-m-d');
-
-            $currentMonthExpenses = $this->db->query("SELECT name, SUM(amount) AS amountSum FROM expenses
+            $userExpenses = $this->db->query("SELECT name, SUM(amount) AS amountSum FROM expenses
                               INNER JOIN expenses_category_assigned_to_users 
                               ON expenses_category_assigned_to_users.id=expenses.expense_category_assigned_to_user_id
                               WHERE expenses.user_id = :loggedUserId 
@@ -49,6 +41,6 @@ class SummaryService
                   'endDate' => $endDate
             ])->findAll();
 
-            return $currentMonthExpenses;
+            return $userExpenses;
       }
 }

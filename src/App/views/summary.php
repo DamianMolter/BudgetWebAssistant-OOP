@@ -17,9 +17,9 @@
           Niestandardowy
         </button>
         <ul class="dropdown-menu">
-          <li><a class="nav-link py-3" href="./summary-current-month.php">Bieżący miesiąc</a></li>
-          <li><a class="nav-link py-3" href="./summary-previous-month.php">Poprzedni miesiąc</a></li>
-          <li><a class="nav-link py-3" href="./summary-current-year.php">Bieżący rok</a></li>
+          <li><a class="nav-link py-3" href="/summary">Bieżący miesiąc</a></li>
+          <li><a class="nav-link py-3" href="/summary/previous-month">Poprzedni miesiąc</a></li>
+          <li><a class="nav-link py-3" href="/summary/current-year">Bieżący rok</a></li>
           <li>
             <a class="nav-link py-3" href="#" data-bs-toggle="modal" data-bs-target="#customPeriod">Okres
               niestandardowy</a>
@@ -36,8 +36,9 @@
               </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <form action="./summary-custom-period.php" method="post">
+            <form method="post">
+              <?php include $this->resolve('partials/_csrf.php'); ?>
+              <div class="modal-body">
                 <div>
                   <h5>Początek okresu:</h5>
                   <input id="startDate" class="form-control" type="date" name="beginDate" />
@@ -46,17 +47,15 @@
                   <h5>Koniec okresu:</h5>
                   <input id="endDate" class="form-control" type="date" name="endDate" />
                 </div>
-
-
-            </div>
-            <div class="modal-footer">
-              <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
-                Anuluj
-              </button>
-              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
-                Akceptuj
-              </button>
-            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Anuluj
+                </button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                  Akceptuj
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -74,21 +73,21 @@
           <?php
           $incomeCategoriesSum = 0;
           $oddOrEven = true;
-          foreach ($currentMonthIncomes as $currentMonthIncome) : ?>
+          foreach ($userIncomes as $userIncome) : ?>
             <?php if ($oddOrEven) : ?>
               <tr class="even-row">
-                <td class="icategory"> <?php echo $currentMonthIncome['name']; ?></td>
-                <td class="icategory-amount"><?php echo $currentMonthIncome['amountSum']; ?> </td>
+                <td class="icategory"> <?php echo $userIncome['name']; ?></td>
+                <td class="icategory-amount"><?php echo $userIncome['amountSum']; ?> </td>
               </tr>
               <?php $oddOrEven = !$oddOrEven;
-              $incomeCategoriesSum += $currentMonthIncome['amountSum']; ?>
+              $incomeCategoriesSum += $userIncome['amountSum']; ?>
             <?php else: ?>
               <tr class="odd-row">
-                <td class="icategory"><?php echo $currentMonthIncome['name']; ?></td>
-                <td class="icategory-amount"> <?php echo $currentMonthIncome['amountSum']; ?></td>
+                <td class="icategory"><?php echo $userIncome['name']; ?></td>
+                <td class="icategory-amount"> <?php echo $userIncome['amountSum']; ?></td>
               </tr>
             <?php $oddOrEven = !$oddOrEven;
-              $incomeCategoriesSum += $currentMonthIncome['amountSum'];
+              $incomeCategoriesSum += $userIncome['amountSum'];
             endif; ?>
 
           <?php endforeach; ?>
@@ -114,21 +113,21 @@
           <?php
           $oddOrEven = true;
           $expenseCategoriesSum = 0;
-          foreach ($currentMonthExpenses as $currentMonthExpense) : ?>
+          foreach ($userExpenses as $userExpense) : ?>
             <?php if ($oddOrEven) : ?>
               <tr class="even-row">
-                <td class="ecategory"> <?php echo $currentMonthExpense['name']; ?></td>
-                <td class="ecategory-amount"><?php echo $currentMonthExpense['amountSum']; ?> </td>
+                <td class="ecategory"> <?php echo $userExpense['name']; ?></td>
+                <td class="ecategory-amount"><?php echo $userExpense['amountSum']; ?> </td>
               </tr>
               <?php $oddOrEven = !$oddOrEven;
-              $expenseCategoriesSum += $currentMonthExpense['amountSum']; ?>
+              $expenseCategoriesSum += $userExpense['amountSum']; ?>
             <?php else: ?>
               <tr class="odd-row">
-                <td class="ecategory"><?php echo $currentMonthExpense['name']; ?></td>
-                <td class="ecategory-amount"> <?php echo $currentMonthExpense['amountSum']; ?></td>
+                <td class="ecategory"><?php echo $userExpense['name']; ?></td>
+                <td class="ecategory-amount"> <?php echo $userExpense['amountSum']; ?></td>
               </tr>
             <?php $oddOrEven = !$oddOrEven;
-              $expenseCategoriesSum += $currentMonthExpense['amountSum'];
+              $expenseCategoriesSum += $userExpense['amountSum'];
             endif; ?>
           <?php endforeach; ?>
           <?php if (!$oddOrEven): ?>
@@ -151,7 +150,7 @@
         if ($finalBalance >= 0) {
           echo 'Gratulacje! Doskonale zarządzasz swoimi finansami!';
         } else {
-          echo 'Musisz popracować nad zarządzaniem finansami';
+          echo 'Musisz popracować nad zarządzaniem finansami!';
         }
         ?>
 

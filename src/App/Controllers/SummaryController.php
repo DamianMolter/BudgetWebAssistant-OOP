@@ -14,15 +14,48 @@ class SummaryController
             private SummaryService $summaryService
       ) {}
 
-      public function summaryView()
+      public function summaryViewCurrentMonth()
       {
-            $currentMonthIncomes = $this->summaryService->getCurrentMonthIncomes();
-            $currentMonthExpenses = $this->summaryService->getCurrentMonthExpenses();
+            $beginDate = date('Y-m-01');
+            $endDate = date('Y-m-d');
+
+            $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
+            $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
 
             echo $this->view->render('summary.php', [
                   'title' => 'Twój zaufany asystent budżetowy',
-                  'currentMonthIncomes' => $currentMonthIncomes,
-                  'currentMonthExpenses' => $currentMonthExpenses
+                  'userIncomes' => $userIncomes,
+                  'userExpenses' => $userExpenses
+            ]);
+      }
+
+      public function summaryViewPreviousMonth()
+      {
+            $beginDate = date('Y-m-01', strtotime('-1 month'));
+            $endDate = date('Y-m-t', strtotime('-1 month'));
+
+            $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
+            $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
+
+            echo $this->view->render('summary.php', [
+                  'title' => 'Twój zaufany asystent budżetowy',
+                  'userIncomes' => $userIncomes,
+                  'userExpenses' => $userExpenses
+            ]);
+      }
+
+      public function summaryViewCurrentYear()
+      {
+            $beginDate = date('Y-01-01');
+            $endDate = date('Y-12-31');
+
+            $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
+            $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
+
+            echo $this->view->render('summary.php', [
+                  'title' => 'Twój zaufany asystent budżetowy',
+                  'userIncomes' => $userIncomes,
+                  'userExpenses' => $userExpenses
             ]);
       }
 }
