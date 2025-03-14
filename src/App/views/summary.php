@@ -41,11 +41,21 @@
               <div class="modal-body">
                 <div>
                   <h5>Początek okresu:</h5>
-                  <input id="startDate" class="form-control" type="date" name="beginDate" />
+                  <input id="startDate"
+                    class="form-control"
+                    type="date"
+                    name="beginDate"
+                    value="<?php echo e($_SESSION['beginDate'] ?? date('Y-m-d'));
+                            unset($_SESSION['begindDate']); ?>" />
                 </div>
                 <div>
                   <h5>Koniec okresu:</h5>
-                  <input id="endDate" class="form-control" type="date" name="endDate" />
+                  <input id="endDate"
+                    class="form-control"
+                    type="date"
+                    name="endDate"
+                    value="<?php echo e($_SESSION['endDate'] ?? date('Y-m-d'));
+                            unset($_SESSION['endDate']); ?>" />
                 </div>
               </div>
               <div class="modal-footer">

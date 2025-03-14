@@ -58,4 +58,26 @@ class SummaryController
                   'userExpenses' => $userExpenses
             ]);
       }
+
+      public function summaryCustomPeriod()
+      {
+            $_SESSION['beginDate'] = $_POST['beginDate'];
+            $_SESSION['endDate'] = $_POST['endDate'];
+            redirectTo('/summary/custom-period');
+      }
+
+      public function summaryViewCustomPeriod()
+      {
+            $beginDate = $_SESSION['beginDate'];
+            $endDate = $_SESSION['endDate'];
+
+            $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
+            $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
+
+            echo $this->view->render('summary.php', [
+                  'title' => 'Twój zaufany asystent budżetowy',
+                  'userIncomes' => $userIncomes,
+                  'userExpenses' => $userExpenses
+            ]);
+      }
 }
