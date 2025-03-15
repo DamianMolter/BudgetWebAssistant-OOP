@@ -25,7 +25,7 @@
           <form class="needs-validation" novalidate="" method="post">
             <?php include $this->resolve('partials/_csrf.php'); ?>
             <div class="row g-3 d-flex justify-content-center">
-              <div class="col-3">
+              <div class="col-xs-12 col-sm-3">
                 <label for="address" class="form-label">Kwota</label>
                 <div class="input-group">
                   <input type="number"
@@ -44,7 +44,7 @@
                 <?php endif; ?>
               </div>
 
-              <div class="col-3">
+              <div class="col-xs-12 col-sm-3">
                 <label for="address2" class="form-label">Data transakcji</label>
                 <input id="startDate"
                   class="form-control"
@@ -60,7 +60,7 @@
 
 
 
-              <div class="col-md-4">
+              <div class="col-xs-12 col-md-4">
                 <label for="state" class="form-label">Kategoria</label>
                 <select class="form-select" id="state" required="" name="incomeCategory">
                   <?php foreach ($userIncomeCategories as $userIncomeCategory) : ?>
