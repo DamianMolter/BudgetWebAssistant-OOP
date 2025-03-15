@@ -23,7 +23,14 @@ use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
 function registerRoutes(App $app)
 {
       $app->get('/', [WelcomeController::class, 'welcome'])->add(GuestOnlyMiddleware::class);
-      $app->get('/summary', [SummaryController::class, 'summary'])->add(AuthRequiredMiddleware::class);
+      $app->get('/summary', [SummaryController::class, 'summaryViewCurrentMonth'])->add(AuthRequiredMiddleware::class);
+      $app->post('/summary', [SummaryController::class, 'summaryCustomPeriod'])->add(AuthRequiredMiddleware::class);
+      $app->post('/summary/previous-month', [SummaryController::class, 'summaryCustomPeriod'])->add(AuthRequiredMiddleware::class);
+      $app->post('/summary/current-year', [SummaryController::class, 'summaryCustomPeriod'])->add(AuthRequiredMiddleware::class);
+      $app->post('/summary/custom-period', [SummaryController::class, 'summaryCustomPeriod'])->add(AuthRequiredMiddleware::class);
+      $app->get('/summary/previous-month', [SummaryController::class, 'summaryViewPreviousMonth'])->add(AuthRequiredMiddleware::class);
+      $app->get('/summary/current-year', [SummaryController::class, 'summaryViewCurrentYear'])->add(AuthRequiredMiddleware::class);
+      $app->get('/summary/custom-period', [SummaryController::class, 'summaryViewCustomPeriod'])->add(AuthRequiredMiddleware::class);
       $app->get('/about', [AboutController::class, 'about']);
       $app->get('/register', [AuthController::class, 'registerView'])->add(GuestOnlyMiddleware::class);
       $app->post('/register', [AuthController::class, 'register'])->add(GuestOnlyMiddleware::class);

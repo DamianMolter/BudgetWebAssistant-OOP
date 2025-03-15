@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Framework\{TemplateEngine, Database, Container};
 use App\Config\Paths;
-use App\Services\{ValidatorService, UserService, ReceiptService, IncomeService, ExpenseService};
+use App\Services\{ValidatorService, UserService, ReceiptService, IncomeService, ExpenseService, SummaryService};
 
 return [
       TemplateEngine::class => fn() => new TemplateEngine(Paths::VIEW),
@@ -30,6 +30,12 @@ return [
             $db = $container->get(Database::class);
 
             return new ExpenseService($db);
+      },
+
+      SummaryService::class => function (Container $container) {
+            $db = $container->get(Database::class);
+
+            return new SummaryService($db);
       },
 
       ReceiptService::class => function (Container $container) {

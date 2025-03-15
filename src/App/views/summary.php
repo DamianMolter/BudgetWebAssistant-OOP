@@ -6,12 +6,7 @@
 
   <header>
     <div class="text-center pt-5">
-      <h1><?php
-
-          if (isset($_SESSION['loggedUserName'])) {
-            echo 'Witaj ' . $_SESSION['loggedUserName'] . ', ';
-          }
-          ?>oto twój Bilans</h1>
+      <h1>Witaj <?php echo $_SESSION['userName']; ?>, oto twój Bilans</h1>
     </div>
   </header>
 
@@ -22,9 +17,9 @@
           Niestandardowy
         </button>
         <ul class="dropdown-menu">
-          <li><a class="nav-link py-3" href="./summary-current-month.php">Bieżący miesiąc</a></li>
-          <li><a class="nav-link py-3" href="./summary-previous-month.php">Poprzedni miesiąc</a></li>
-          <li><a class="nav-link py-3" href="./summary-current-year.php">Bieżący rok</a></li>
+          <li><a class="nav-link py-3" href="/summary">Bieżący miesiąc</a></li>
+          <li><a class="nav-link py-3" href="/summary/previous-month">Poprzedni miesiąc</a></li>
+          <li><a class="nav-link py-3" href="/summary/current-year">Bieżący rok</a></li>
           <li>
             <a class="nav-link py-3" href="#" data-bs-toggle="modal" data-bs-target="#customPeriod">Okres
               niestandardowy</a>
@@ -41,27 +36,36 @@
               </h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <form action="./summary-custom-period.php" method="post">
+            <form method="post">
+              <?php include $this->resolve('partials/_csrf.php'); ?>
+              <div class="modal-body">
                 <div>
                   <h5>Początek okresu:</h5>
-                  <input id="startDate" class="form-control" type="date" name="beginDate" />
+                  <input id="startDate"
+                    class="form-control"
+                    type="date"
+                    name="beginDate"
+                    value="<?php echo e($_SESSION['beginDate'] ?? date('Y-m-d'));
+                            unset($_SESSION['begindDate']); ?>" />
                 </div>
                 <div>
                   <h5>Koniec okresu:</h5>
-                  <input id="endDate" class="form-control" type="date" name="endDate" />
+                  <input id="endDate"
+                    class="form-control"
+                    type="date"
+                    name="endDate"
+                    value="<?php echo e($_SESSION['endDate'] ?? date('Y-m-d'));
+                            unset($_SESSION['endDate']); ?>" />
                 </div>
-
-
-            </div>
-            <div class="modal-footer">
-              <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
-                Anuluj
-              </button>
-              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
-                Akceptuj
-              </button>
-            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Anuluj
+                </button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                  Akceptuj
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -77,39 +81,36 @@
             <td>Kwota (PLN)</td>
           </tr>
           <?php
-          require_once 'connect.php';
-          $incomeSummaryQuery = $db->prepare('SELECT name, SUM(amount) AS amountSum FROM incomes
-INNER JOIN incomes_category_assigned_to_users ON incomes_category_assigned_to_users.id=incomes.income_category_assigned_to_user_id
-WHERE incomes.user_id = :loggedUserId AND incomes.date_of_income BETWEEN :beginDate AND :endDate
-GROUP BY name
-ORDER BY amountSUM DESC');
-          $incomeSummaryQuery->bindValue(':loggedUserId', $_SESSION['loggedUserId'], PDO::PARAM_INT);
-          $incomeSummaryQuery->bindValue(':beginDate', $_SESSION['beginDate'], PDO::PARAM_STR);
-          $incomeSummaryQuery->bindValue(':endDate', $_SESSION['endDate'], PDO::PARAM_STR);
-          $incomeSummaryQuery->execute();
-
-          $results = $incomeSummaryQuery->fetchAll();
-          $howMany = $incomeSummaryQuery->rowCount();
-
-          $oddOrEven = true;
           $incomeCategoriesSum = 0;
-          foreach ($results as $result) {
-            if ($oddOrEven) {
-              echo '<tr class="even-row"><td class="icategory">' . $result['name'] . '</td><td class="icategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = false;
-              $incomeCategoriesSum += $result['amountSum'];
-            } else {
-              echo '<tr class="odd-row"><td class="icategory">' . $result['name'] . '</td><td class="icategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = true;
-              $incomeCategoriesSum += $result['amountSum'];
-            }
-          }
-          if ($oddOrEven) {
-            echo '<tr class="even-row"><td>Suma</td><td>' . $incomeCategoriesSum . '</td></tr>';
-          } else {
-            echo '<tr class="odd-row col-title"><td>Suma</td><td>' . $incomeCategoriesSum . '</td></tr>';
-          }
-          ?>
+          $oddOrEven = true;
+          foreach ($userIncomes as $userIncome) : ?>
+            <?php if ($oddOrEven) : ?>
+              <tr class="even-row">
+                <td class="icategory"> <?php echo $userIncome['name']; ?></td>
+                <td class="icategory-amount"><?php echo $userIncome['amountSum']; ?> </td>
+              </tr>
+              <?php $oddOrEven = !$oddOrEven;
+              $incomeCategoriesSum += $userIncome['amountSum']; ?>
+            <?php else: ?>
+              <tr class="odd-row">
+                <td class="icategory"><?php echo $userIncome['name']; ?></td>
+                <td class="icategory-amount"> <?php echo $userIncome['amountSum']; ?></td>
+              </tr>
+            <?php $oddOrEven = !$oddOrEven;
+              $incomeCategoriesSum += $userIncome['amountSum'];
+            endif; ?>
+
+          <?php endforeach; ?>
+
+          <?php if (!$oddOrEven): ?>
+            <tr class="odd-row col-title">
+            <?php else: ?>
+            <tr class="even-row col-title">
+            <?php endif; ?>
+            <td>Suma</td>
+            <td><?php echo $incomeCategoriesSum; ?></td>
+            </tr>
+
         </table>
       </div>
       <div class="text-center">
@@ -120,45 +121,38 @@ ORDER BY amountSUM DESC');
             <td>Kwota (PLN)</td>
           </tr>
           <?php
-          require_once 'connect.php';
-          $expenseSummaryQuery = $db->prepare('SELECT name, SUM(amount) AS amountSum FROM expenses
-INNER JOIN expenses_category_assigned_to_users ON expenses_category_assigned_to_users.id=expenses.expense_category_assigned_to_user_id
-WHERE expenses.user_id = :loggedUserId AND expenses.date_of_expense BETWEEN :beginDate AND :endDate
-GROUP BY name
-ORDER BY amountSUM DESC');
-          $expenseSummaryQuery->bindValue(':loggedUserId', $_SESSION['loggedUserId'], PDO::PARAM_INT);
-          $expenseSummaryQuery->bindValue(':beginDate', $_SESSION['beginDate'], PDO::PARAM_STR);
-          $expenseSummaryQuery->bindValue(':endDate', $_SESSION['endDate'], PDO::PARAM_STR);
-          $expenseSummaryQuery->execute();
-
-          $results = $expenseSummaryQuery->fetchAll();
-          $howMany = $expenseSummaryQuery->rowCount();
-
           $oddOrEven = true;
           $expenseCategoriesSum = 0;
-          foreach ($results as $result) {
-            if ($oddOrEven) {
-              echo '<tr class="even-row"><td class="ecategory">' . $result['name'] . '</td><td class="ecategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = false;
-              $expenseCategoriesSum += $result['amountSum'];
-            } else {
-              echo '<tr class="odd-row"><td class="ecategory">' . $result['name'] . '</td><td class="ecategory-amount">' . $result['amountSum'] . '</td></tr>';
-              $oddOrEven = true;
-              $expenseCategoriesSum += $result['amountSum'];
-            }
-          }
-          if ($oddOrEven) {
-            echo '<tr class="even-row col-title"><td>Suma</td><td>' . $expenseCategoriesSum . '</td></tr>';
-          } else {
-            echo '<tr class="odd-row col-title"><td>Suma</td><td>' . $expenseCategoriesSum . '</td></tr>';
-          }
-          $finalBalance = $incomeCategoriesSum - $expenseCategoriesSum;
-          ?>
+          foreach ($userExpenses as $userExpense) : ?>
+            <?php if ($oddOrEven) : ?>
+              <tr class="even-row">
+                <td class="ecategory"> <?php echo $userExpense['name']; ?></td>
+                <td class="ecategory-amount"><?php echo $userExpense['amountSum']; ?> </td>
+              </tr>
+              <?php $oddOrEven = !$oddOrEven;
+              $expenseCategoriesSum += $userExpense['amountSum']; ?>
+            <?php else: ?>
+              <tr class="odd-row">
+                <td class="ecategory"><?php echo $userExpense['name']; ?></td>
+                <td class="ecategory-amount"> <?php echo $userExpense['amountSum']; ?></td>
+              </tr>
+            <?php $oddOrEven = !$oddOrEven;
+              $expenseCategoriesSum += $userExpense['amountSum'];
+            endif; ?>
+          <?php endforeach; ?>
+          <?php if (!$oddOrEven): ?>
+            <tr class="odd-row col-title">
+            <?php else: ?>
+            <tr class="even-row col-title">
+            <?php endif; ?>
+            <td>Suma</td>
+            <td><?php echo $expenseCategoriesSum; ?></td>
+            </tr>
         </table>
         <div class="table"></div>
       </div>
     </div>
-
+    <?php $finalBalance = $incomeCategoriesSum - $expenseCategoriesSum; ?>
     <div class="container text-center py-5">
       <h6>
         Twój bilans wynosi <?php echo $finalBalance; ?> PLN!
@@ -166,7 +160,7 @@ ORDER BY amountSUM DESC');
         if ($finalBalance >= 0) {
           echo 'Gratulacje! Doskonale zarządzasz swoimi finansami!';
         } else {
-          echo 'Musisz popracować nad zarządzaniem finansami';
+          echo 'Musisz popracować nad zarządzaniem finansami!';
         }
         ?>
 
