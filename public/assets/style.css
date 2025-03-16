@@ -63,6 +63,13 @@ p.error{
   font-size: 1.5rem;
 }
 
+span.error{
+  color: red;
+  font-weight: bolder;
+  text-align: center;
+  font-size: 1rem;
+}
+
 label{
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;

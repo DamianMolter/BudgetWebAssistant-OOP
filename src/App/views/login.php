@@ -29,9 +29,9 @@
                 name="email"
                 value="<?php echo e($oldFormData['email'] ?? ''); ?>" />
               <?php if (array_key_exists('email', $errors)) : ?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <span class='error'>
                   <?php echo e($errors['email'][0]); ?>
-                </div>
+                </span>
               <?php endif; ?>
               <label for="floatingInput">Email</label>
             </div>
@@ -43,9 +43,9 @@
                 name="password"
                 value="" />
               <?php if (array_key_exists('password', $errors)) : ?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <span class='error'>
                   <?php echo e($errors['password'][0]); ?>
-                </div>
+                </span>
               <?php endif; ?>
               <label for="floatingPassword">Hasło</label>
             </div>

@@ -38,9 +38,9 @@
                   <span class="input-group-text">zł</span>
                 </div>
                 <?php if (array_key_exists('amount', $errors)) : ?>
-                  <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <span class='error'>
                     <?php echo e($errors['amount'][0]); ?>
-                  </div>
+                  </span>
                 <?php endif; ?>
               </div>
 
@@ -52,9 +52,9 @@
                   name="date"
                   value="<?php echo e($oldFormData['date'] ?? date("Y-m-d")); ?>" />
                 <?php if (array_key_exists('date', $errors)) : ?>
-                  <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <span class='error'>
                     <?php echo e($errors['date'][0]); ?>
-                  </div>
+                  </span>
                 <?php endif; ?>
               </div>
 
