@@ -11,7 +11,7 @@ use Framework\Rules\{
       NameRule,
       MinRule,
       InRule,
-      URLRule,
+      UrlRule,
       MatchRule,
       LengthMaxRule,
       NumericRule,
