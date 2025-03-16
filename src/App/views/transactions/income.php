@@ -25,7 +25,7 @@
           <form class="needs-validation" novalidate="" method="post">
             <?php include $this->resolve('partials/_csrf.php'); ?>
             <div class="row g-3 d-flex justify-content-center">
-              <div class="col-3">
+              <div class="col-xs-12 col-sm-3">
                 <label for="address" class="form-label">Kwota</label>
                 <div class="input-group">
                   <input type="number"
@@ -38,13 +38,13 @@
                   <span class="input-group-text">zł</span>
                 </div>
                 <?php if (array_key_exists('amount', $errors)) : ?>
-                  <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <span class='error'>
                     <?php echo e($errors['amount'][0]); ?>
-                  </div>
+                  </span>
                 <?php endif; ?>
               </div>
 
-              <div class="col-3">
+              <div class="col-xs-12 col-sm-3">
                 <label for="address2" class="form-label">Data transakcji</label>
                 <input id="startDate"
                   class="form-control"
@@ -52,15 +52,15 @@
                   name="date"
                   value="<?php echo e($oldFormData['date'] ?? date("Y-m-d")); ?>" />
                 <?php if (array_key_exists('date', $errors)) : ?>
-                  <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <span class='error'>
                     <?php echo e($errors['date'][0]); ?>
-                  </div>
+                  </span>
                 <?php endif; ?>
               </div>
 
 
 
-              <div class="col-md-4">
+              <div class="col-xs-12 col-md-4">
                 <label for="state" class="form-label">Kategoria</label>
                 <select class="form-select" id="state" required="" name="incomeCategory">
                   <?php foreach ($userIncomeCategories as $userIncomeCategory) : ?>
@@ -70,9 +70,9 @@
                   <?php endforeach; ?>
                 </select>
                 <?php if (array_key_exists('incomeCategory', $errors)) : ?>
-                  <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                  <span class='error'>
                     <?php echo e($errors['date'][0]); ?>
-                  </div>
+                  </span>
                 <?php endif; ?>
               </div>
             </div>

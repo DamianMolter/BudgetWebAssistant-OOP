@@ -29,9 +29,9 @@
                 name="name"
                 value="<?php echo e($oldFormData['name'] ?? ''); ?>" />
               <?php if (array_key_exists('name', $errors)) : ?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <span class='error'>
                   <?php echo e($errors['name'][0]); ?>
-                </div>
+                </span>
               <?php endif; ?>
 
               <label for="floatingInput">Imię</label>
@@ -45,9 +45,9 @@
                 name="email"
                 value="<?php echo e($oldFormData['email'] ?? ''); ?>" />
               <?php if (array_key_exists('email', $errors)) : ?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <span class='error'>
                   <?php echo e($errors['email'][0]); ?>
-                </div>
+                </span>
               <?php endif; ?>
               <label for="floatingInput">Email</label>
 
@@ -60,9 +60,9 @@
                 name="password"
                 value="" />
               <?php if (array_key_exists('password', $errors)) : ?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <span class='error'>
                   <?php echo e($errors['password'][0]); ?>
-                </div>
+                </span>
               <?php endif; ?>
               <label for="floatingPassword">Hasło</label>
             </div>
@@ -74,9 +74,9 @@
                 name="confirmPassword"
                 value="" />
               <?php if (array_key_exists('confirmPassword', $errors)) : ?>
-                <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                <span class='error'>
                   <?php echo e($errors['confirmPassword'][0]); ?>
-                </div>
+                </span>
               <?php endif; ?>
               <label for="floatingPassword">Powtórz hasło</label>
             </div>

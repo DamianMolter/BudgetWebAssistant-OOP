@@ -12,6 +12,14 @@ div.dark-green{
   width: 100%;
 }
 
+h1, h2 {
+  font-family: "Charm", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 4rem;
+    color: #004225;
+}
+
 body h3 {
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 700;
@@ -19,11 +27,10 @@ body h3 {
   color: white;
 }
 
-h1, h2 {
-  font-family: "Charm", cursive;
+h4, h5 {
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 5rem;
   color: #004225;
 }
 
@@ -32,13 +39,6 @@ h6 {
   font-weight: 400;
   font-style: normal;
   font-size: 2rem;
-  color: #004225;
-}
-
-h4, h5 {
-  font-family: "IBM Plex Sans", sans-serif;
-  font-weight: 400;
-  font-style: normal;
   color: #004225;
 }
 
@@ -61,6 +61,13 @@ p.error{
   font-weight: bolder;
   text-align: center;
   font-size: 1.5rem;
+}
+
+span.error{
+  color: red;
+  font-weight: bolder;
+  text-align: center;
+  font-size: 1rem;
 }
 
 label{
@@ -214,6 +221,11 @@ p{
 }
 
 @media(max-width: 1200px){
+
+  h1, h2 {
+    font-size: 2.5rem;
+  }
+
   .container.navbar{
     display: none;
   }

@@ -22,10 +22,13 @@ class SummaryController
             $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
             $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
 
+            $chosenPeriod = 'bieżący miesiąc';
+
             echo $this->view->render('summary.php', [
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
-                  'userExpenses' => $userExpenses
+                  'userExpenses' => $userExpenses,
+                  'chosenPeriod' => $chosenPeriod
             ]);
       }
 
@@ -37,10 +40,13 @@ class SummaryController
             $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
             $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
 
+            $chosenPeriod = 'poprzedni miesiąc.';
+
             echo $this->view->render('summary.php', [
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
-                  'userExpenses' => $userExpenses
+                  'userExpenses' => $userExpenses,
+                  'chosenPeriod' => $chosenPeriod
             ]);
       }
 
@@ -52,10 +58,13 @@ class SummaryController
             $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
             $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
 
+            $chosenPeriod = 'bieżący rok.';
+
             echo $this->view->render('summary.php', [
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
-                  'userExpenses' => $userExpenses
+                  'userExpenses' => $userExpenses,
+                  'chosenPeriod' => $chosenPeriod
             ]);
       }
 
@@ -74,10 +83,13 @@ class SummaryController
             $userIncomes = $this->summaryService->getUserIncomes($beginDate, $endDate);
             $userExpenses = $this->summaryService->getUserExpenses($beginDate, $endDate);
 
+            $chosenPeriod = " od {$beginDate} do {$endDate}.";
+
             echo $this->view->render('summary.php', [
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
-                  'userExpenses' => $userExpenses
+                  'userExpenses' => $userExpenses,
+                  'chosenPeriod' => $chosenPeriod
             ]);
       }
 }

@@ -6,7 +6,7 @@
 
   <header>
     <div class="text-center pt-5">
-      <h1>Witaj <?php echo $_SESSION['userName']; ?>, oto twój Bilans</h1>
+      <h1>Witaj <?php echo $_SESSION['userName']; ?>, oto twój Bilans za okres: <?php echo $chosenPeriod; ?></h1>
     </div>
   </header>
 
