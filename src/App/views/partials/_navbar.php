@@ -23,7 +23,7 @@
                         </li>
                         <li>
                               <button class="dropdown-item" type="button">
-                                    <a href="#" class="nav-link py-3">Ustawienia</a>
+                                    <a href="/settings" class="nav-link py-3">Ustawienia</a>
                               </button>
                         </li>
                         <li>
@@ -47,7 +47,7 @@
                               <a href="/summary" class="nav-link py-3">Przeglądaj bilans</a>
                         </li>
                         <li class="nav-item">
-                              <a href="#" class="nav-link py-3">Ustawienia</a>
+                              <a href="/settings" class="nav-link py-3">Ustawienia</a>
                         </li>
                         <li class="nav-item">
                               <a href="/logout" class="nav-link py-3">Wyloguj</a>
