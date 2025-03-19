@@ -28,4 +28,25 @@ class SettingsController
       {
             $this->settingsService->addIncomeCategory($_POST);
       }
+
+      public function addIncomeCategoryView()
+      {
+            echo $this->view->render('settings/add-income-category.php', [
+                  'title' => 'Ustawienia'
+            ]);
+      }
+
+      public function addExpenseCategoryView()
+      {
+            echo $this->view->render('settings/add-expense-category.php', [
+                  'title' => 'Ustawienia'
+            ]);
+      }
+
+      public function addPaymentMethodView()
+      {
+            echo $this->view->render('settings/add-payment-method.php', [
+                  'title' => 'Ustawienia'
+            ]);
+      }
 }

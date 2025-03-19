@@ -1,7 +1,5 @@
 <?php include $this->resolve("partials/_header.php"); ?>
 
-
-
 <body>
 
       <?php include $this->resolve("partials/_navbar.php"); ?>
@@ -12,12 +10,12 @@
                         <h6>Kategorie Przychodów</h6>
                   </div>
                   <div class="flex-justify-content">
-                        <button
-                              class="w-100 btn btn-primary btn-lg"
-                              data-bs-toggle="modal"
-                              data-bs-target="#add-income-category">
-                              Dodaj
-                        </button>
+                        <a href="/settings/add-income-category">
+                              <button
+                                    class="w-100 btn btn-primary btn-lg">
+                                    Dodaj
+                              </button></a>
+
                         <button
                               class="w-100 btn btn-primary btn-lg"
                               data-bs-toggle="modal"
@@ -37,12 +35,11 @@
                         <h6>Kategorie Wydatków</h6>
                   </div>
 
-                  <button
-                        class="w-100 btn btn-primary btn-lg"
-                        data-bs-toggle="modal"
-                        data-bs-target="#add-expense-category">
-                        Dodaj
-                  </button>
+                  <a href="/settings/add-expense-category">
+                        <button
+                              class="w-100 btn btn-primary btn-lg">
+                              Dodaj
+                        </button></a>
                   <button
                         class="w-100 btn btn-primary btn-lg"
                         data-bs-toggle="modal"
@@ -61,12 +58,11 @@
                         <h6>Kategorie Metod Płatności</h6>
                   </div>
 
-                  <button
-                        class="w-100 btn btn-primary btn-lg"
-                        data-bs-toggle="modal"
-                        data-bs-target="#add-payment-method">
-                        Dodaj
-                  </button>
+                  <a href="/settings/add-payment-method">
+                        <button
+                              class="w-100 btn btn-primary btn-lg">
+                              Dodaj
+                        </button></a>
                   <button
                         class="w-100 btn btn-primary btn-lg"
                         data-bs-toggle="modal"

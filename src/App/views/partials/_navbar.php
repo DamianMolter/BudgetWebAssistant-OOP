@@ -3,7 +3,7 @@
             <div class="dropdown" id="mobile-menu">
                   <button class="btn btn-secondary-li dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="assets/images/icons8-hamburger-menu-50.png" alt="dropdown menu icon" />
+                        <img src="/assets/images/icons8-hamburger-menu-50.png" alt="dropdown menu icon" />
                   </button>
                   <ul class="dropdown-menu">
                         <li>
