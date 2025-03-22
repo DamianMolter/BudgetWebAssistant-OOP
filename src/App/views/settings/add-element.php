@@ -30,9 +30,9 @@
                                                       class="form-control"
                                                       type="text"
                                                       name="newName" />
-                                                <?php if (array_key_exists('date', $errors)) : ?>
+                                                <?php if (array_key_exists('name', $errors)) : ?>
                                                       <span class='error'>
-                                                            <?php echo e($errors['date'][0]); ?>
+                                                            <?php echo e($errors['name'][0]); ?>
                                                       </span>
                                                 <?php endif; ?>
                                           </div>

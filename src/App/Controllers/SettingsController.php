@@ -24,14 +24,6 @@ class SettingsController
             ]);
       }
 
-      public function addIncomeCategory()
-      {
-            $this->settingsService->addIncomeCategory($_POST);
-
-            $_SESSION['success'] = true;
-            redirectTo('/settings/add-income-category');
-      }
-
       public function addIncomeCategoryView()
       {
             $elementName = 'kategorię przychodu';
@@ -40,6 +32,20 @@ class SettingsController
                   'title' => 'Ustawienia',
                   'elementName' => $elementName
             ]);
+      }
+
+      public function addIncomeCategory()
+      {
+            $tableName = 'incomes_category_assigned_to_users';
+
+            $validatedName = $this->settingsService->validateNewName($_POST['newName']);
+
+            $this->settingsService->isNameTaken($tableName, $validatedName);
+
+            $this->settingsService->addIncomeCategory($validatedName);
+
+            $_SESSION['success'] = true;
+            redirectTo('/settings/add-income-category');
       }
 
       public function addExpenseCategoryView()
@@ -53,7 +59,13 @@ class SettingsController
 
       public function addExpenseCategory()
       {
-            $this->settingsService->addExpenseCategory($_POST);
+            $tableName = 'expenses_category_assigned_to_users';
+
+            $validatedName = $this->settingsService->validateNewName($_POST['newName']);
+
+            $this->settingsService->isNameTaken($tableName, $validatedName);
+
+            $this->settingsService->addExpenseCategory($validatedName);
 
             $_SESSION['success'] = true;
             redirectTo('/settings/add-expense-category');
@@ -70,7 +82,13 @@ class SettingsController
 
       public function addPaymentMethod()
       {
-            $this->settingsService->addPaymentMethod($_POST);
+            $tableName = 'payment_methods_assigned_to_users';
+
+            $validatedName = $this->settingsService->validateNewName($_POST['newName']);
+
+            $this->settingsService->isNameTaken($tableName, $validatedName);
+
+            $this->settingsService->addPaymentMethod($validatedName);
 
             $_SESSION['success'] = true;
             redirectTo('/settings/add-payment-method');
