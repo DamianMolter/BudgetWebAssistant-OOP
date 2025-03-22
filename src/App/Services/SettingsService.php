@@ -11,50 +11,53 @@ class SettingsService
 {
       public function __construct(private Database $db) {}
 
-      public function validateNewName(string $newName): string
+      public function sanitizeNewName(string $newName): string
       {
             $newName = trim(preg_replace('/[\t\n\r\s]+/', ' ', $newName));
-            $newName = strtoupper(substr($newName, 0, 1)) . strtolower(substr($newName, 1));
             return $newName;
       }
 
-      public function isNameTaken(string $tableName, string $elementName)
+      public function isNameTaken(string $tableNameName, string $elementName)
       {
+
             $nameCount = $this->db->query(
-                  "SELECT COUNT(*) FROM {$tableName} WHERE name = :name",
+                  "SELECT COUNT(*) FROM {$tableNameName} WHERE name = :name",
                   [
                         'name' => $elementName
                   ]
             )->count();
 
             if ($nameCount > 0) {
-                  throw new ValidationException(['name' => ['Podana nazwa jest już zajęta.']]);
+                  throw new ValidationException(['newName' => ['Podana nazwa jest już zajęta.']]);
             }
       }
 
-      public function addIncomeCategory(string $newName)
+      public function addElement(string $tableName, string $newName)
       {
-            $this->db->query("INSERT INTO incomes_category_assigned_to_users(user_id, name)
+            $this->db->query("INSERT INTO {$tableName}(user_id, name)
             VALUES (:user_id, :name)", [
                   'user_id' => $_SESSION['user'],
                   'name' => $newName
             ]);
       }
 
-      public function addExpenseCategory(string $newName)
+      public function getUserElements(string $tableName)
       {
-            $this->db->query("INSERT INTO expenses_category_assigned_to_users(user_id, name)
-            VALUES (:user_id, :name)", [
-                  'user_id' => $_SESSION['user'],
-                  'name' => $newName
-            ]);
+            $userElementNames = $this->db->query("SELECT id, name FROM {$tableName}
+            WHERE user_id = :user_id", [
+                  'user_id' => $_SESSION['user']
+            ])->findAll();
+
+            return $userElementNames;
       }
 
-      public function addPaymentMethod(string $newName)
+      public function editElement(string $newName, string $oldElementId, string $tableName)
       {
-            $this->db->query("INSERT INTO payment_methods_assigned_to_users(user_id, name)
-            VALUES (:user_id, :name)", [
+
+            $this->db->query("UPDATE {$tableName} SET name = :name
+            WHERE user_id = :user_id AND id = :id", [
                   'user_id' => $_SESSION['user'],
+                  'id' => $oldElementId,
                   'name' => $newName
             ]);
       }

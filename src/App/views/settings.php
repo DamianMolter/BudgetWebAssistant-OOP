@@ -16,12 +16,11 @@
                                     Dodaj
                               </button></a>
 
-                        <button
-                              class="w-100 btn btn-primary btn-lg"
-                              data-bs-toggle="modal"
-                              data-bs-target="#edit-income-category">
-                              Edytuj
-                        </button>
+                        <a href="/settings/edit-income-category">
+                              <button
+                                    class="w-100 btn btn-primary btn-lg">
+                                    Edytuj
+                              </button></a>
                         <button
                               class="w-100 btn btn-primary btn-lg"
                               data-bs-toggle="modal"
@@ -40,12 +39,11 @@
                               class="w-100 btn btn-primary btn-lg">
                               Dodaj
                         </button></a>
-                  <button
-                        class="w-100 btn btn-primary btn-lg"
-                        data-bs-toggle="modal"
-                        data-bs-target="#edit-expense-category">
-                        Edytuj
-                  </button>
+                  <a href="/settings/edit-expense-category">
+                        <button
+                              class="w-100 btn btn-primary btn-lg">
+                              Edytuj
+                        </button></a>
                   <button
                         class="w-100 btn btn-primary btn-lg"
                         data-bs-toggle="modal"
@@ -63,12 +61,11 @@
                               class="w-100 btn btn-primary btn-lg">
                               Dodaj
                         </button></a>
-                  <button
-                        class="w-100 btn btn-primary btn-lg"
-                        data-bs-toggle="modal"
-                        data-bs-target="#edit-payment-method">
-                        Edytuj
-                  </button>
+                  <a href="/settings/edit-payment-method">
+                        <button
+                              class="w-100 btn btn-primary btn-lg">
+                              Edytuj
+                        </button></a>
                   <button
                         class="w-100 btn btn-primary btn-lg"
                         data-bs-toggle="modal"

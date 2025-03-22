@@ -36,6 +36,18 @@ class IncomeService
             $_SESSION['success'] = true;
       }
 
+      public function getUserIncomeCategories()
+      {
+            $userIncomeCategories = $this->db->query("SELECT id, name FROM incomes_category_assigned_to_users 
+            WHERE user_id = :user_id", [
+                  'user_id' => $_SESSION['user']
+            ])->findAll();
+
+            return $userIncomeCategories;
+      }
+
+      //unused methods
+
       public function getUserTransactions(int $length, int $offset)
       {
             $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
@@ -123,15 +135,5 @@ class IncomeService
                         'user_id' => $_SESSION['user']
                   ]
             );
-      }
-
-      public function getUserIncomeCategories()
-      {
-            $userIncomeCategories = $this->db->query("SELECT id, name FROM incomes_category_assigned_to_users 
-            WHERE user_id = :user_id", [
-                  'user_id' => $_SESSION['user']
-            ])->findAll();
-
-            return $userIncomeCategories;
       }
 }

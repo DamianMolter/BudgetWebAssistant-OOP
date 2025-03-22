@@ -20,7 +20,7 @@
 
                   <div class="row g-5">
                         <div class="col-md-12 col-lg-12 text-center">
-                              <h4 class="mb-3">Wprowadź żadaną nazwę kategorii:</h4>
+                              <h4 class="mb-3">Wprowadź żądaną nazwę:</h4>
                               <form class="needs-validation" novalidate="" method="post">
                                     <?php include $this->resolve('partials/_csrf.php'); ?>
                                     <div class="row g-3 d-flex justify-content-center">
@@ -29,10 +29,11 @@
                                                 <input
                                                       class="form-control"
                                                       type="text"
-                                                      name="newName" />
-                                                <?php if (array_key_exists('name', $errors)) : ?>
+                                                      name="newName"
+                                                      value="<?php echo e($oldFormData['newName'] ?? ""); ?>" />
+                                                <?php if (array_key_exists('newName', $errors)) : ?>
                                                       <span class='error'>
-                                                            <?php echo e($errors['name'][0]); ?>
+                                                            <?php echo e($errors['newName'][0]); ?>
                                                       </span>
                                                 <?php endif; ?>
                                           </div>
