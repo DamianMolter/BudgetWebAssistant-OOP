@@ -7,7 +7,7 @@
       <div class="container">
             <main>
                   <div class="py-5 text-center">
-                        <h1>Dodaj metodę płatności</h1>
+                        <h1>Dodaj <?php echo $elementName; ?></h1>
                   </div>
 
                   <div class="row g-5">
@@ -21,7 +21,7 @@
                                                 <input
                                                       class="form-control"
                                                       type="text"
-                                                      name="addPaymentMethod" />
+                                                      name="addIncomeCategory" />
                                                 <?php if (array_key_exists('date', $errors)) : ?>
                                                       <span class='error'>
                                                             <?php echo e($errors['date'][0]); ?>

@@ -31,22 +31,29 @@ class SettingsController
 
       public function addIncomeCategoryView()
       {
-            echo $this->view->render('settings/add-income-category.php', [
-                  'title' => 'Ustawienia'
+            $elementName = 'kategorię przychodu';
+
+            echo $this->view->render('settings/add-element.php', [
+                  'title' => 'Ustawienia',
+                  'elementName' => $elementName
             ]);
       }
 
       public function addExpenseCategoryView()
       {
-            echo $this->view->render('settings/add-expense-category.php', [
-                  'title' => 'Ustawienia'
+            $elementName = 'kategorię wydatku';
+            echo $this->view->render('settings/add-element.php', [
+                  'title' => 'Ustawienia',
+                  'elementName' => $elementName
             ]);
       }
 
       public function addPaymentMethodView()
       {
-            echo $this->view->render('settings/add-payment-method.php', [
-                  'title' => 'Ustawienia'
+            $elementName = 'metodę płatności';
+            echo $this->view->render('settings/add-element.php', [
+                  'title' => 'Ustawienia',
+                  'elementName' => $elementName
             ]);
       }
 }
