@@ -10,6 +10,14 @@
                         <h1>Dodaj <?php echo $elementName; ?></h1>
                   </div>
 
+                  <?php if (isset($_SESSION['success'])) : ?>
+                        <div class="action-status">
+                              <p class="success">Element został pomyślnie dodany!</p>
+                        </div>
+                  <?php unset($_SESSION['success']);
+                  endif; ?>
+
+
                   <div class="row g-5">
                         <div class="col-md-12 col-lg-12 text-center">
                               <h4 class="mb-3">Wprowadź żadaną nazwę kategorii:</h4>
@@ -21,7 +29,7 @@
                                                 <input
                                                       class="form-control"
                                                       type="text"
-                                                      name="addIncomeCategory" />
+                                                      name="newName" />
                                                 <?php if (array_key_exists('date', $errors)) : ?>
                                                       <span class='error'>
                                                             <?php echo e($errors['date'][0]); ?>

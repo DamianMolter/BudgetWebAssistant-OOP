@@ -27,6 +27,9 @@ class SettingsController
       public function addIncomeCategory()
       {
             $this->settingsService->addIncomeCategory($_POST);
+
+            $_SESSION['success'] = true;
+            redirectTo('/settings/add-income-category');
       }
 
       public function addIncomeCategoryView()
@@ -48,6 +51,14 @@ class SettingsController
             ]);
       }
 
+      public function addExpenseCategory()
+      {
+            $this->settingsService->addExpenseCategory($_POST);
+
+            $_SESSION['success'] = true;
+            redirectTo('/settings/add-expense-category');
+      }
+
       public function addPaymentMethodView()
       {
             $elementName = 'metodę płatności';
@@ -55,5 +66,13 @@ class SettingsController
                   'title' => 'Ustawienia',
                   'elementName' => $elementName
             ]);
+      }
+
+      public function addPaymentMethod()
+      {
+            $this->settingsService->addPaymentMethod($_POST);
+
+            $_SESSION['success'] = true;
+            redirectTo('/settings/add-payment-method');
       }
 }
