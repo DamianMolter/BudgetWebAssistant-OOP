@@ -13,10 +13,8 @@ class SettingsService
 
       public function validateNewName(string $newName): string
       {
-            $newName = preg_replace('/[^A-Za-z0-9\-]/', '', $newName);
-            $newName = trim($newName);
+            $newName = trim(preg_replace('/[\t\n\r\s]+/', ' ', $newName));
             $newName = strtoupper(substr($newName, 0, 1)) . strtolower(substr($newName, 1));
-
             return $newName;
       }
 
