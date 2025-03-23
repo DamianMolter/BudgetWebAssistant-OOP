@@ -55,8 +55,17 @@ class AuthController
 
       public function userAccountSettingsView()
       {
+            $userData = $this->userService->getUserData();
 
+            echo $this->view->render('settings/user-account-settings.php', [
+                  'userData' => $userData
+            ]);
+      }
 
-            echo $this->view->render('settings/user-account-settings.php');
+      public function userAccountSettings()
+      {
+            $this->validatorService->validateUserAccountSettings($_POST);
+
+            $this->userService->isEmailTaken($_POST['email']);
       }
 }

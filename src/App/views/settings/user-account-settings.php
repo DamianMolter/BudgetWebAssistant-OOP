@@ -26,16 +26,16 @@
                                     <?php include $this->resolve('partials/_csrf.php'); ?>
                                     <div class="row g-3 d-flex justify-content-center">
                                           <div class="col-sm-6 col-xl-4">
-                                                <label for="address" class="form-label">Twoje imię:</label>
+                                                <label for="name" class="form-label">Twoje imię:</label>
                                                 <div class="input-group">
                                                       <input type="text"
                                                             class="form-control"
                                                             name="name"
-                                                            value="<?php echo e($oldFormData['amount'] ?? ''); ?>" />
+                                                            value="<?php echo e($oldFormData['name'] ?? $userData['username']); ?>" />
                                                 </div>
-                                                <?php if (array_key_exists('amount', $errors)) : ?>
+                                                <?php if (array_key_exists('name', $errors)) : ?>
                                                       <span class='error'>
-                                                            <?php echo e($errors['amount'][0]); ?>
+                                                            <?php echo e($errors['name'][0]); ?>
                                                       </span>
                                                 <?php endif; ?>
                                           </div>
@@ -43,16 +43,16 @@
 
                                     <div class="row g-3 d-flex justify-content-center">
                                           <div class="col-sm-6 col-xl-4">
-                                                <label for="address" class="form-label">Adres email:</label>
+                                                <label for="email" class="form-label">Adres email:</label>
                                                 <div class="input-group">
                                                       <input type="text"
                                                             class="form-control"
                                                             name="email"
-                                                            value="<?php echo e($oldFormData['amount'] ?? ''); ?>" />
+                                                            value="<?php echo e($oldFormData['email'] ?? $userData['email']); ?>" />
                                                 </div>
-                                                <?php if (array_key_exists('amount', $errors)) : ?>
+                                                <?php if (array_key_exists('email', $errors)) : ?>
                                                       <span class='error'>
-                                                            <?php echo e($errors['amount'][0]); ?>
+                                                            <?php echo e($errors['email'][0]); ?>
                                                       </span>
                                                 <?php endif; ?>
                                           </div>
@@ -61,7 +61,7 @@
 
                                     <div class="row g-3 d-flex justify-content-center">
                                           <div class="col-sm-6 col-xl-4">
-                                                <label for="address" class="form-label">Hasło:</label>
+                                                <label for="password" class="form-label">Hasło:</label>
                                                 <div class="input-group">
                                                       <input type="password"
                                                             class="form-control"
@@ -78,7 +78,7 @@
 
                                     <div class="row g-3 d-flex justify-content-center mb-5">
                                           <div class="col-sm-6 col-xl-4">
-                                                <label for="address" class="form-label">Powtórz hasło:</label>
+                                                <label for="confirmPassword" class="form-label">Powtórz hasło:</label>
                                                 <div class="input-group">
                                                       <input type="password"
                                                             class="form-control"
@@ -88,9 +88,9 @@
                                                             value="" />
 
                                                 </div>
-                                                <?php if (array_key_exists('password', $errors)) : ?>
+                                                <?php if (array_key_exists('confirmPassword', $errors)) : ?>
                                                       <span class='error'>
-                                                            <?php echo e($errors['password'][0]); ?>
+                                                            <?php echo e($errors['confirmPassword'][0]); ?>
                                                       </span>
                                                 <?php endif; ?>
 
@@ -100,10 +100,11 @@
                                     <button class="w-100 btn btn-primary btn-lg" type="submit">
                                           Zapisz
                                     </button>
-                                    <button class="w-100 btn btn-secondary btn-lg" type="reset">
-                                          Anuluj
-                                    </button>
+
                               </form>
+                              <button class="w-100 btn btn-secondary btn-lg" type="reset">
+                                    Powrót
+                              </button>
 
                         </div>
             </main>
