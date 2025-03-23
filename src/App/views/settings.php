@@ -76,9 +76,10 @@
                         <h6>Twoje konto</h6>
                   </div>
                   <div>
-                        <button class="w-100 btn btn-primary btn-lg">
-                              Zmień ustawienia konta
-                        </button>
+                        <a href="/settings/user-account-settings">
+                              <button class="w-100 btn btn-primary btn-lg">
+                                    Zmień ustawienia konta
+                              </button></a>
                   </div>
 
                   <div>

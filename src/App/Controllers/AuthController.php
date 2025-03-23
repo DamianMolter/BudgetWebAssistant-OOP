@@ -52,4 +52,11 @@ class AuthController
             $this->userService->logout();
             redirectTo("/");
       }
+
+      public function userAccountSettingsView()
+      {
+
+
+            echo $this->view->render('settings/user-account-settings.php');
+      }
 }
