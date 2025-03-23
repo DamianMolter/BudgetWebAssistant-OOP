@@ -21,12 +21,11 @@
                                     class="w-100 btn btn-primary btn-lg">
                                     Edytuj
                               </button></a>
-                        <button
-                              class="w-100 btn btn-primary btn-lg"
-                              data-bs-toggle="modal"
-                              data-bs-target="#delete-income-category">
-                              Usuń
-                        </button>
+                        <a href="/settings/delete-income-category">
+                              <button
+                                    class="w-100 btn btn-primary btn-lg">
+                                    Usuń
+                              </button></a>
                   </div>
             </div>
             <div>
@@ -44,12 +43,11 @@
                               class="w-100 btn btn-primary btn-lg">
                               Edytuj
                         </button></a>
-                  <button
-                        class="w-100 btn btn-primary btn-lg"
-                        data-bs-toggle="modal"
-                        data-bs-target="#delete-expense-category">
-                        Usuń
-                  </button>
+                  <a href="/settings/delete-expense-category">
+                        <button
+                              class="w-100 btn btn-primary btn-lg">
+                              Usuń
+                        </button></a>
             </div>
             <div>
                   <div class="py-5 text-center">
@@ -66,12 +64,11 @@
                               class="w-100 btn btn-primary btn-lg">
                               Edytuj
                         </button></a>
-                  <button
-                        class="w-100 btn btn-primary btn-lg"
-                        data-bs-toggle="modal"
-                        data-bs-target="#delete-payment-method">
-                        Usuń
-                  </button>
+                  <a href="/settings/delete-payment-method">
+                        <button
+                              class="w-100 btn btn-primary btn-lg">
+                              Usuń
+                        </button></a>
             </div>
 
             <div>

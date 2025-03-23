@@ -17,13 +17,13 @@ class SettingsService
             return $newName;
       }
 
-      public function isNameTaken(string $tableNameName, string $elementName)
+      public function isNameTaken(string $tableName, string $elementName)
       {
-
             $nameCount = $this->db->query(
-                  "SELECT COUNT(*) FROM {$tableNameName} WHERE name = :name",
+                  "SELECT COUNT(*) FROM {$tableName} WHERE name = :name AND user_id = :user_id",
                   [
-                        'name' => $elementName
+                        'name' => $elementName,
+                        'user_id' => $_SESSION['user']
                   ]
             )->count();
 
@@ -51,7 +51,7 @@ class SettingsService
             return $userElementNames;
       }
 
-      public function editElement(string $newName, string $oldElementId, string $tableName)
+      public function editElement(string $tableName, string $newName, string $oldElementId)
       {
 
             $this->db->query("UPDATE {$tableName} SET name = :name
@@ -59,6 +59,16 @@ class SettingsService
                   'user_id' => $_SESSION['user'],
                   'id' => $oldElementId,
                   'name' => $newName
+            ]);
+      }
+
+      public function deleteElement(string $tableName, string $oldElementId)
+      {
+
+            $this->db->query("DELETE FROM {$tableName}
+            WHERE user_id = :user_id AND id = :id", [
+                  'user_id' => $_SESSION['user'],
+                  'id' => $oldElementId
             ]);
       }
 }

@@ -15,6 +15,32 @@ class SettingsController
             private ValidatorService $validatorService
       ) {}
 
+      private function checkAndAdd(string $tableName, array $formData)
+      {
+            $this->validatorService->validateElement($formData);
+
+            $sanitizedName = $this->settingsService->sanitizeNewName($formData['newName']);
+
+            $this->settingsService->isNameTaken($tableName, $sanitizedName);
+
+            $this->settingsService->addElement($tableName, $sanitizedName);
+
+            $_SESSION['success'] = true;
+      }
+
+      private function checkAndEdit(array $formData, string $tableName)
+      {
+            $this->validatorService->validateElement($formData);
+
+            $sanitizedName = $this->settingsService->sanitizeNewName($formData['newName']);
+
+            $this->settingsService->isNameTaken($tableName, $sanitizedName);
+
+            $this->settingsService->editElement($tableName, $sanitizedName, $formData['oldElementId']);
+
+            $_SESSION['success'] = true;
+      }
+
       public function settingsView()
       {
             echo $this->view->render('settings.php', [
@@ -36,15 +62,8 @@ class SettingsController
       {
             $tableName = 'incomes_category_assigned_to_users';
 
-            $this->validatorService->validateElement($_POST);
+            $this->checkAndAdd($tableName, $_POST);
 
-            $sanitizedName = $this->settingsService->sanitizeNewName($_POST['newName']);
-
-            $this->settingsService->isNameTaken($tableName, $sanitizedName);
-
-            $this->settingsService->addElement($tableName, $sanitizedName);
-
-            $_SESSION['success'] = true;
             redirectTo('/settings/add-income-category');
       }
 
@@ -61,15 +80,8 @@ class SettingsController
       {
             $tableName = 'expenses_category_assigned_to_users';
 
-            $this->validatorService->validateElement($_POST);
+            $this->checkAndAdd($tableName, $_POST);
 
-            $sanitizedName = $this->settingsService->sanitizeNewName($_POST['newName']);
-
-            $this->settingsService->isNameTaken($tableName, $sanitizedName);
-
-            $this->settingsService->addElement($tableName, $sanitizedName);
-
-            $_SESSION['success'] = true;
             redirectTo('/settings/add-expense-category');
       }
 
@@ -86,27 +98,20 @@ class SettingsController
       {
             $tableName = 'payment_methods_assigned_to_users';
 
-            $this->validatorService->validateElement($_POST);
+            $this->checkAndAdd($tableName, $_POST);
 
-            $sanitizedName = $this->settingsService->sanitizeNewName($_POST['newName']);
-
-            $this->settingsService->isNameTaken($tableName, $sanitizedName);
-
-            $this->settingsService->addElement($tableName, $sanitizedName);
-
-            $_SESSION['success'] = true;
             redirectTo('/settings/add-payment-method');
       }
 
       public function editIncomeCategoryView()
       {
             $elementName = 'kategorię przychodu';
-            $userIncomeCategories = $this->settingsService->getUserElements('incomes_category_assigned_to_users');
+            $userElementNames = $this->settingsService->getUserElements('incomes_category_assigned_to_users');
 
             echo $this->view->render('settings/edit-element.php', [
                   'title' => 'Ustawienia',
                   'elementName' => $elementName,
-                  'userIncomeCategories' => $userIncomeCategories
+                  'userElementNames' => $userElementNames
             ]);
       }
 
@@ -114,15 +119,8 @@ class SettingsController
       {
             $tableName = 'incomes_category_assigned_to_users';
 
-            $this->validatorService->validateElement($_POST);
+            $this->checkAndEdit($_POST, $tableName);
 
-            $sanitizedName = $this->settingsService->sanitizeNewName($_POST['newName']);
-
-            $this->settingsService->isNameTaken($tableName, $sanitizedName);
-
-            $this->settingsService->editElement($sanitizedName, $_POST['oldElementId'], $tableName);
-
-            $_SESSION['success'] = true;
             redirectTo('/settings/edit-income-category');
       }
 
@@ -142,15 +140,8 @@ class SettingsController
       {
             $tableName = 'expenses_category_assigned_to_users';
 
-            $this->validatorService->validateElement($_POST);
+            $this->checkAndEdit($_POST, $tableName);
 
-            $sanitizedName = $this->settingsService->sanitizeNewName($_POST['newName']);
-
-            $this->settingsService->isNameTaken($tableName, $sanitizedName);
-
-            $this->settingsService->editElement($sanitizedName, $_POST['oldElementId'], $tableName);
-
-            $_SESSION['success'] = true;
             redirectTo('/settings/edit-expense-category');
       }
 
@@ -170,15 +161,74 @@ class SettingsController
       {
             $tableName = 'payment_methods_assigned_to_users';
 
-            $this->validatorService->validateElement($_POST);
+            $this->checkAndEdit($_POST, $tableName);
 
-            $sanitizedName = $this->settingsService->sanitizeNewName($_POST['newName']);
+            redirectTo('/settings/edit-payment-method');
+      }
 
-            $this->settingsService->isNameTaken($tableName, $sanitizedName);
+      public function deleteIncomeCategoryView()
+      {
+            $elementName = 'kategorię przychodu';
+            $userElementNames = $this->settingsService->getUserElements('incomes_category_assigned_to_users');
 
-            $this->settingsService->editElement($sanitizedName, $_POST['oldElementId'], $tableName);
+            echo $this->view->render('settings/delete-element.php', [
+                  'title' => 'Ustawienia',
+                  'elementName' => $elementName,
+                  'userElementNames' => $userElementNames
+            ]);
+      }
+
+      public function deleteIncomeCategory()
+      {
+            $tableName = 'incomes_category_assigned_to_users';
+
+            $this->settingsService->deleteElement($tableName, $_POST['oldElementId']);
 
             $_SESSION['success'] = true;
-            redirectTo('/settings/edit-payment-method');
+            redirectTo('/settings/delete-income-category');
+      }
+
+      public function deleteExpenseCategoryView()
+      {
+            $elementName = 'kategorię wydatku';
+            $userElementNames = $this->settingsService->getUserElements('expenses_category_assigned_to_users');
+
+            echo $this->view->render('settings/delete-element.php', [
+                  'title' => 'Ustawienia',
+                  'elementName' => $elementName,
+                  'userElementNames' => $userElementNames
+            ]);
+      }
+
+      public function deleteExpenseCategory()
+      {
+            $tableName = 'expenses_category_assigned_to_users';
+
+            $this->settingsService->deleteElement($tableName, $_POST['oldElementId']);
+
+            $_SESSION['success'] = true;
+            redirectTo('/settings/delete-expense-category');
+      }
+
+      public function deletePaymentMethodView()
+      {
+            $elementName = 'formę płatności';
+            $userElementNames = $this->settingsService->getUserElements('payment_methods_assigned_to_users');
+
+            echo $this->view->render('settings/delete-element.php', [
+                  'title' => 'Ustawienia',
+                  'elementName' => $elementName,
+                  'userElementNames' => $userElementNames
+            ]);
+      }
+
+      public function deletePaymentMethod()
+      {
+            $tableName = 'payment_methods_assigned_to_users';
+
+            $this->settingsService->deleteElement($tableName, $_POST['oldElementId']);
+
+            $_SESSION['success'] = true;
+            redirectTo('/settings/delete-payment-method');
       }
 }
