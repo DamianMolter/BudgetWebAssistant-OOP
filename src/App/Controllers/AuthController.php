@@ -52,4 +52,35 @@ class AuthController
             $this->userService->logout();
             redirectTo("/");
       }
+
+      public function userAccountSettingsView()
+      {
+            $userData = $this->userService->getUserData();
+
+            echo $this->view->render('settings/user-account-settings.php', [
+                  'userData' => $userData
+            ]);
+      }
+
+      public function userAccountSettings()
+      {
+            $this->validatorService->validateUserAccountSettings($_POST);
+
+            $this->userService->isEmailTakenByOtherUser($_POST['email']);
+
+            $this->userService->editUserData($_POST);
+
+            $_SESSION['success'] = true;
+
+            redirectTo("/settings/user-account-settings");
+      }
+
+      public function deleteUserAccount()
+      {
+            $this->userService->deleteUserAccount($_POST);
+
+            $this->userService->logout();
+
+            redirectTo("/");
+      }
 }

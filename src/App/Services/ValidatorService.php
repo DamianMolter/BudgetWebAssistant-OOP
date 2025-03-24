@@ -74,4 +74,14 @@ class ValidatorService
                   'newName' => ['required']
             ]);
       }
+
+      public function validateUserAccountSettings(array $formData)
+      {
+
+            $this->validator->validate($formData, [
+                  'name' => ['required', 'name'],
+                  'email' => ['required', 'email'],
+                  'confirmPassword' => ['match:password']
+            ]);
+      }
 }
