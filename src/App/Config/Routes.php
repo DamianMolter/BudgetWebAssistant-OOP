@@ -63,5 +63,6 @@ function registerRoutes(App $app)
       $app->post('/settings/delete-payment-method', [SettingsController::class, 'deletePaymentMethod'])->add(AuthRequiredMiddleware::class);
       $app->get('/settings/user-account-settings', [AuthController::class, 'userAccountSettingsView'])->add(AuthRequiredMiddleware::class);
       $app->post('/settings/user-account-settings', [AuthController::class, 'userAccountSettings'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings', [AuthController::class, 'deleteUserAccount'])->add(AuthRequiredMiddleware::class);
       $app->setErrorHandler([ErrorController::class, 'notFound']);
 }

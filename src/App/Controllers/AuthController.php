@@ -74,4 +74,13 @@ class AuthController
 
             redirectTo("/settings/user-account-settings");
       }
+
+      public function deleteUserAccount()
+      {
+            $this->userService->deleteUserAccount($_POST);
+
+            $this->userService->logout();
+
+            redirectTo("/");
+      }
 }

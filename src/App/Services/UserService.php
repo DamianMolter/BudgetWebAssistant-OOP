@@ -168,4 +168,21 @@ class UserService
                   ]);
             }
       }
+
+      public function deleteUserAccount($formData)
+      {
+            $hashedPassword = $this->db->query("SELECT password FROM users WHERE id = :id", [
+                  'id' => $_SESSION['user']
+            ])->find();
+
+            $passwordMatch = password_verify($formData['password'], $hashedPassword['password'] ?? '');
+
+            if (!$passwordMatch) {
+                  throw new ValidationException(['password' => ['Podano nieprawidłowe hasło. Usunięcie konta jest niemożliwe']]);
+            }
+
+            $this->db->query("DELETE FROM users WHERE id = :id", [
+                  'id' => $_SESSION['user']
+            ]);
+      }
 }
