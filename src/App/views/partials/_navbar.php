@@ -3,7 +3,7 @@
             <div class="dropdown" id="mobile-menu">
                   <button class="btn btn-secondary-li dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        <img src="assets/images/icons8-hamburger-menu-50.png" alt="dropdown menu icon" />
+                        <img src="/assets/images/icons8-hamburger-menu-50.png" alt="dropdown menu icon" />
                   </button>
                   <ul class="dropdown-menu">
                         <li>
@@ -23,7 +23,7 @@
                         </li>
                         <li>
                               <button class="dropdown-item" type="button">
-                                    <a href="#" class="nav-link py-3">Ustawienia</a>
+                                    <a href="/settings" class="nav-link py-3">Ustawienia</a>
                               </button>
                         </li>
                         <li>
@@ -47,7 +47,7 @@
                               <a href="/summary" class="nav-link py-3">Przeglądaj bilans</a>
                         </li>
                         <li class="nav-item">
-                              <a href="#" class="nav-link py-3">Ustawienia</a>
+                              <a href="/settings" class="nav-link py-3">Ustawienia</a>
                         </li>
                         <li class="nav-item">
                               <a href="/logout" class="nav-link py-3">Wyloguj</a>

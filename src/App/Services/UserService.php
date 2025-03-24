@@ -119,4 +119,70 @@ class UserService
                   $params['httponly']
             );
       }
+
+      public function getUserData()
+      {
+            $userData = $this->db->query("SELECT username, email FROM users WHERE id=:id", [
+                  'id' => $_SESSION['user']
+            ])->find();
+
+            return $userData;
+      }
+
+      public function isEmailTakenByOtherUser(string $email)
+      {
+            $emailCount = $this->db->query(
+                  "SELECT COUNT(*) FROM users WHERE email = :email AND id != :id",
+                  [
+                        'email' => $email,
+                        'id' => $_SESSION['user']
+                  ]
+            )->count();
+
+            if ($emailCount > 0) {
+                  throw new ValidationException(['email' => ['Podany adres email jest już zajęty.']]);
+            }
+      }
+
+      public function editUserData(array $formData)
+      {
+            if ($formData['password'] !== '') {
+
+                  $hashedPassword = password_hash($formData['password'], PASSWORD_DEFAULT);
+
+                  $this->db->query("UPDATE users
+                  SET username = :username, email = :email, password = :password
+                  WHERE id = :id", [
+                        'username' => $formData['name'],
+                        'email' => $formData['email'],
+                        'password' => $hashedPassword,
+                        'id' => $_SESSION['user']
+                  ]);
+            } else {
+                  $this->db->query("UPDATE users
+                  SET username = :username, email = :email
+                  WHERE id = :id", [
+                        'username' => $formData['name'],
+                        'email' => $formData['email'],
+                        'id' => $_SESSION['user']
+                  ]);
+            }
+      }
+
+      public function deleteUserAccount($formData)
+      {
+            $hashedPassword = $this->db->query("SELECT password FROM users WHERE id = :id", [
+                  'id' => $_SESSION['user']
+            ])->find();
+
+            $passwordMatch = password_verify($formData['password'], $hashedPassword['password'] ?? '');
+
+            if (!$passwordMatch) {
+                  throw new ValidationException(['password' => ['Podano nieprawidłowe hasło. Usunięcie konta jest niemożliwe']]);
+            }
+
+            $this->db->query("DELETE FROM users WHERE id = :id", [
+                  'id' => $_SESSION['user']
+            ]);
+      }
 }

@@ -67,4 +67,21 @@ class ValidatorService
                   'date' => ['required', 'dateFormat:Y-m-d']
             ]);
       }
+
+      public function validateElement(array $formData)
+      {
+            $this->validator->validate($formData, [
+                  'newName' => ['required']
+            ]);
+      }
+
+      public function validateUserAccountSettings(array $formData)
+      {
+
+            $this->validator->validate($formData, [
+                  'name' => ['required', 'name'],
+                  'email' => ['required', 'email'],
+                  'confirmPassword' => ['match:password']
+            ]);
+      }
 }

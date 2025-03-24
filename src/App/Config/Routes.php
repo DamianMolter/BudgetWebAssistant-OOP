@@ -15,7 +15,8 @@ use App\Controllers\{
       ExpenseController,
       TransactionController,
       ReceiptController,
-      ErrorController
+      ErrorController,
+      SettingsController
 };
 
 use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
@@ -41,12 +42,27 @@ function registerRoutes(App $app)
       $app->post('/income', [IncomeController::class, 'create'])->add(AuthRequiredMiddleware::class);
       $app->get('/expense', [ExpenseController::class, 'createView'])->add(AuthRequiredMiddleware::class);
       $app->post('/expense', [ExpenseController::class, 'create'])->add(AuthRequiredMiddleware::class);
-      $app->get('/transaction/{transaction}/', [TransactionController::class, 'editView'])->add(AuthRequiredMiddleware::class);
-      $app->post('/transaction/{transaction}/', [TransactionController::class, 'edit'])->add(AuthRequiredMiddleware::class);
-      $app->delete('/transaction/{transaction}/', [TransactionController::class, 'delete'])->add(AuthRequiredMiddleware::class);
-      $app->get('/transaction/{transaction}/receipt', [ReceiptController::class, 'uploadView'])->add(AuthRequiredMiddleware::class);
-      $app->post('/transaction/{transaction}/receipt', [ReceiptController::class, 'upload'])->add(AuthRequiredMiddleware::class);
-      $app->get('/transaction/{transaction}/receipt/{receipt}', [ReceiptController::class, 'download'])->add(AuthRequiredMiddleware::class);
-      $app->delete('/transaction/{transaction}/receipt/{receipt}', [ReceiptController::class, 'delete'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings', [SettingsController::class, 'settingsView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/add-income-category', [SettingsController::class, 'addIncomeCategoryView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/edit-income-category', [SettingsController::class, 'editIncomeCategoryView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/delete-income-category', [SettingsController::class, 'deleteIncomeCategoryView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/add-expense-category', [SettingsController::class, 'addExpenseCategoryView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/edit-expense-category', [SettingsController::class, 'editExpenseCategoryView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/delete-expense-category', [SettingsController::class, 'deleteExpenseCategoryView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/add-payment-method', [SettingsController::class, 'addPaymentMethodView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/edit-payment-method', [SettingsController::class, 'editPaymentMethodView'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/delete-payment-method', [SettingsController::class, 'deletePaymentMethodView'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/add-income-category', [SettingsController::class, 'addIncomeCategory'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/edit-income-category', [SettingsController::class, 'editIncomeCategory'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/delete-income-category', [SettingsController::class, 'deleteIncomeCategory'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/add-expense-category', [SettingsController::class, 'addExpenseCategory'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/edit-expense-category', [SettingsController::class, 'editExpenseCategory'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/delete-expense-category', [SettingsController::class, 'deleteExpenseCategory'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/add-payment-method', [SettingsController::class, 'addPaymentMethod'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/edit-payment-method', [SettingsController::class, 'editPaymentMethod'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/delete-payment-method', [SettingsController::class, 'deletePaymentMethod'])->add(AuthRequiredMiddleware::class);
+      $app->get('/settings/user-account-settings', [AuthController::class, 'userAccountSettingsView'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings/user-account-settings', [AuthController::class, 'userAccountSettings'])->add(AuthRequiredMiddleware::class);
+      $app->post('/settings', [AuthController::class, 'deleteUserAccount'])->add(AuthRequiredMiddleware::class);
       $app->setErrorHandler([ErrorController::class, 'notFound']);
 }
