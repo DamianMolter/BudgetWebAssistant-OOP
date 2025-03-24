@@ -66,6 +66,12 @@ class AuthController
       {
             $this->validatorService->validateUserAccountSettings($_POST);
 
-            $this->userService->isEmailTaken($_POST['email']);
+            $this->userService->isEmailTakenByOtherUser($_POST['email']);
+
+            $this->userService->editUserData($_POST);
+
+            $_SESSION['success'] = true;
+
+            redirectTo("/settings/user-account-settings");
       }
 }

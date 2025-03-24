@@ -128,4 +128,44 @@ class UserService
 
             return $userData;
       }
+
+      public function isEmailTakenByOtherUser(string $email)
+      {
+            $emailCount = $this->db->query(
+                  "SELECT COUNT(*) FROM users WHERE email = :email AND id != :id",
+                  [
+                        'email' => $email,
+                        'id' => $_SESSION['user']
+                  ]
+            )->count();
+
+            if ($emailCount > 0) {
+                  throw new ValidationException(['email' => ['Podany adres email jest już zajęty.']]);
+            }
+      }
+
+      public function editUserData(array $formData)
+      {
+            if ($formData['password'] !== '') {
+
+                  $hashedPassword = password_hash($formData['password'], PASSWORD_DEFAULT);
+
+                  $this->db->query("UPDATE users
+                  SET username = :username, email = :email, password = :password
+                  WHERE id = :id", [
+                        'username' => $formData['name'],
+                        'email' => $formData['email'],
+                        'password' => $hashedPassword,
+                        'id' => $_SESSION['user']
+                  ]);
+            } else {
+                  $this->db->query("UPDATE users
+                  SET username = :username, email = :email
+                  WHERE id = :id", [
+                        'username' => $formData['name'],
+                        'email' => $formData['email'],
+                        'id' => $_SESSION['user']
+                  ]);
+            }
+      }
 }

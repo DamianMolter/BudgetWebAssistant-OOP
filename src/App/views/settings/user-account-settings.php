@@ -102,9 +102,10 @@
                                     </button>
 
                               </form>
-                              <button class="w-100 btn btn-secondary btn-lg" type="reset">
-                                    Powrót
-                              </button>
+                              <a href="/settings">
+                                    <button class="w-100 btn btn-secondary btn-lg" type="reset">
+                                          Powrót
+                                    </button></a>
 
                         </div>
             </main>
