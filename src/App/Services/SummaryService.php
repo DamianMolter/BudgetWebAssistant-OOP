@@ -43,4 +43,14 @@ class SummaryService
 
             return $userExpenses;
       }
+
+      public function getUserName()
+      {
+
+            $userName = $this->db->query("SELECT username FROM users WHERE id = :id", [
+                  'id' => $_SESSION['user']
+            ])->find();
+
+            return $userName;
+      }
 }

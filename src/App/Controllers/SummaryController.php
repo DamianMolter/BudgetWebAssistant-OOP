@@ -16,6 +16,7 @@ class SummaryController
 
       public function summaryViewCurrentMonth()
       {
+            $userName = $this->summaryService->getUserName();
             $beginDate = date('Y-m-01');
             $endDate = date('Y-m-d');
 
@@ -28,12 +29,14 @@ class SummaryController
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
                   'userExpenses' => $userExpenses,
-                  'chosenPeriod' => $chosenPeriod
+                  'chosenPeriod' => $chosenPeriod,
+                  'userName' => $userName['username']
             ]);
       }
 
       public function summaryViewPreviousMonth()
       {
+            $userName = $this->summaryService->getUserName();
             $beginDate = date('Y-m-01', strtotime('-1 month'));
             $endDate = date('Y-m-t', strtotime('-1 month'));
 
@@ -46,12 +49,14 @@ class SummaryController
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
                   'userExpenses' => $userExpenses,
-                  'chosenPeriod' => $chosenPeriod
+                  'chosenPeriod' => $chosenPeriod,
+                  'userName' => $userName['username']
             ]);
       }
 
       public function summaryViewCurrentYear()
       {
+            $userName = $this->summaryService->getUserName();
             $beginDate = date('Y-01-01');
             $endDate = date('Y-12-31');
 
@@ -64,7 +69,8 @@ class SummaryController
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
                   'userExpenses' => $userExpenses,
-                  'chosenPeriod' => $chosenPeriod
+                  'chosenPeriod' => $chosenPeriod,
+                  'userName' => $userName['username']
             ]);
       }
 
@@ -77,6 +83,7 @@ class SummaryController
 
       public function summaryViewCustomPeriod()
       {
+            $userName = $this->summaryService->getUserName();
             $beginDate = $_SESSION['beginDate'];
             $endDate = $_SESSION['endDate'];
 
@@ -89,7 +96,8 @@ class SummaryController
                   'title' => 'Twój zaufany asystent budżetowy',
                   'userIncomes' => $userIncomes,
                   'userExpenses' => $userExpenses,
-                  'chosenPeriod' => $chosenPeriod
+                  'chosenPeriod' => $chosenPeriod,
+                  'userName' => $userName['username']
             ]);
       }
 }
