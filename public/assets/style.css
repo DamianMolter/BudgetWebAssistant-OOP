@@ -225,6 +225,10 @@ p{
   background-color: #004225;
 }
 
+div.return a{
+  color:#004225;
+}
+
 @media(max-width: 1200px){
 
   h1, h2 {

@@ -83,6 +83,11 @@
             <button class="btn btn-primary px-5 btn-lg rounded-pill text-center mx-3" type="submit">
               Zarejestruj się
             </button>
+            <div class="return"><a href="/">
+                Powrót do strony głównej</a>
+              <br />
+              Masz już konto? <a href="/login">Zaloguj się</a>
+            </div>
           </form>
         </div>
       </div>

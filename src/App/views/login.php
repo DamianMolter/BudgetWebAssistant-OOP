@@ -18,7 +18,7 @@
             </p>
           </blockquote>
         </div>
-        <div class="col-md-10 mx-auto col-lg-5">
+        <div class="col-md-10 mx-auto col-lg-5 align-items-center">
           <form class="p-4 p-md-5 border rounded-5 bg-body-tertiary" method="POST">
             <?php include $this->resolve('partials/_csrf.php'); ?>
             <div class="form-floating mb-3">
@@ -52,6 +52,12 @@
             <button class="btn btn-primary px-5 btn-lg rounded-pill text-center mx-3" type="submit">
               Zaloguj się
             </button>
+            <div class="return"><a href="/">
+                Powrót do strony głównej
+              </a>
+              <br />
+              Nie masz jeszcze konta? <a href="/register">Załóż je!</a>
+            </div>
           </form>
         </div>
       </div>
