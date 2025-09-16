@@ -54,7 +54,7 @@
                               class="w-100 btn btn-primary btn-lg">
                               Usuń
                         </button></a>
-                  <a href="/settings">
+                  <a href="/settings/set-expense-limit">
                         <button
                               class="w-100 btn btn-primary btn-lg">
                               Ustaw Limity Wydatków
