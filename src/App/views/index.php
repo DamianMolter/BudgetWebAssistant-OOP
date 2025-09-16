@@ -30,7 +30,7 @@
             </button></a>
         </div>
         <?php
-        if ($_SESSION['registerSuccessfull']) {
+        if (isset($_SESSION['registerSuccessfull'])) {
           echo '<p class = "success">Rejestracja zakończona sukcesem! Zaloguj się na Twoje konto!</p>';
           unset($_SESSION['registerSuccessfull']);
         }
