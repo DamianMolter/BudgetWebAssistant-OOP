@@ -33,7 +33,7 @@ include $this->resolve("partials/_header.php"); ?>
 
                                           <div class="col-xs-12 col-md-4">
                                                 <h4 class="mb-3">Wybierz kategorię</h4>
-                                                <select class="form-select" id="state" required="" name="oldElementId">
+                                                <select class="form-select" id="state" required="" name="expenseCategoryId">
                                                       <?php foreach ($userElementNames as $userElementName) : ?>
                                                             <option value="<?php echo e($userElementName['id']); ?>">
                                                                   <?php echo e($userElementName['name']); ?>
@@ -59,9 +59,9 @@ include $this->resolve("partials/_header.php"); ?>
                                                             value="<?php echo e($oldFormData['amount'] ?? ''); ?>" />
                                                       <span class="input-group-text">zł</span>
                                                 </div>
-                                                <?php if (array_key_exists('newName', $errors)) : ?>
+                                                <?php if (array_key_exists('amount', $errors)) : ?>
                                                       <span class='error'>
-                                                            <?php echo e($errors['newName'][0]); ?>
+                                                            <?php echo e($errors['amount'][0]); ?>
                                                       </span>
                                                 <?php endif; ?>
                                           </div>

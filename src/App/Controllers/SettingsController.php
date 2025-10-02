@@ -241,4 +241,17 @@ class SettingsController
                   'userElementNames' => $userElementNames
             ]);
       }
+
+      public function setExpenseLimit()
+      {
+            $formData = $_POST;
+
+            $this->validatorService->validateLimit($formData);
+
+            $this->settingsService->setExpenseLimit($formData);
+
+            $_SESSION['success'] = true;
+
+            redirectTo('/settings/set-expense-limit');
+      }
 }
