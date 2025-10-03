@@ -231,4 +231,27 @@ class SettingsController
             $_SESSION['success'] = true;
             redirectTo('/settings/delete-payment-method');
       }
+
+      public function setExpenseLimitView()
+      {
+            $userElementNames = $this->settingsService->getUserElements('expenses_category_assigned_to_users');
+
+            echo $this->view->render('settings/set-expense-limit.php', [
+                  'title' => 'Ustawienia',
+                  'userElementNames' => $userElementNames
+            ]);
+      }
+
+      public function setExpenseLimit()
+      {
+            $formData = $_POST;
+
+            $this->validatorService->validateLimit($formData);
+
+            $this->settingsService->setExpenseLimit($formData);
+
+            $_SESSION['success'] = true;
+
+            redirectTo('/settings/set-expense-limit');
+      }
 }

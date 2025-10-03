@@ -71,4 +71,13 @@ class SettingsService
                   'id' => $oldElementId
             ]);
       }
+
+      public function setExpenseLimit(array $formData)
+      {
+            $this->db->query("UPDATE expenses_category_assigned_to_users SET expense_limit = :amount
+            WHERE id = :id", [
+                  'amount' => $formData['amount'],
+                  'id' => $formData['expenseCategoryId'],
+            ]);
+      }
 }

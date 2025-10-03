@@ -84,4 +84,11 @@ class ValidatorService
                   'confirmPassword' => ['match:password']
             ]);
       }
+
+      public function validateLimit(array $formData)
+      {
+            $this->validator->validate($formData, [
+                  'amount' => ['min:0']
+            ]);
+      }
 }

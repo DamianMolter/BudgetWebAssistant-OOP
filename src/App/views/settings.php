@@ -54,7 +54,13 @@
                               class="w-100 btn btn-primary btn-lg">
                               Usuń
                         </button></a>
+                  <a href="/settings/set-expense-limit">
+                        <button
+                              class="w-100 btn btn-primary btn-lg">
+                              Ustaw Limity Wydatków
+                        </button></a>
             </div>
+
             <div>
                   <div class="py-5 text-center">
                         <h6>Kategorie Metod Płatności</h6>
