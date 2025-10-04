@@ -62,22 +62,10 @@ class ApiController
       // Pobierz limit dla konkretnej kategorii
       $limit = $this->apiService->getExpenseLimitById((int) $categoryId);
 
-      // Sprawdź czy kategoria istnieje i należy do użytkownika
-      if (!$limit) {
-         http_response_code(404);
-         header('Content-Type: application/json');
-         echo json_encode([
-            'success' => false,
-            'message' => 'Category not found or does not belong to user'
-         ]);
-         return;
-      }
-
       // Zwróć jako JSON
       header('Content-Type: application/json');
-      echo json_encode([
-         'success' => true,
-         'data' => $limit
-      ]);
+      echo json_encode(
+         $limit
+      );
    }
 }
