@@ -16,7 +16,8 @@ use App\Controllers\{
       TransactionController,
       ReceiptController,
       ErrorController,
-      SettingsController
+      SettingsController,
+      ApiController
 };
 
 use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
@@ -54,7 +55,6 @@ function registerRoutes(App $app)
       $app->get('/settings/delete-payment-method', [SettingsController::class, 'deletePaymentMethodView'])->add(AuthRequiredMiddleware::class);
       $app->get('/settings/set-expense-limit', [SettingsController::class, 'setExpenseLimitView'])->add(AuthRequiredMiddleware::class);
       $app->post('/settings/set-expense-limit', [SettingsController::class, 'setExpenseLimit'])->add(AuthRequiredMiddleware::class);
-
       $app->post('/settings/add-income-category', [SettingsController::class, 'addIncomeCategory'])->add(AuthRequiredMiddleware::class);
       $app->post('/settings/edit-income-category', [SettingsController::class, 'editIncomeCategory'])->add(AuthRequiredMiddleware::class);
       $app->post('/settings/delete-income-category', [SettingsController::class, 'deleteIncomeCategory'])->add(AuthRequiredMiddleware::class);
@@ -68,4 +68,6 @@ function registerRoutes(App $app)
       $app->post('/settings/user-account-settings', [AuthController::class, 'userAccountSettings'])->add(AuthRequiredMiddleware::class);
       $app->post('/settings', [AuthController::class, 'deleteUserAccount'])->add(AuthRequiredMiddleware::class);
       $app->setErrorHandler([ErrorController::class, 'notFound']);
+      $app->get('/api/expense-limits', [ApiController::class, 'getExpenseLimits'])->add(AuthRequiredMiddleware::class);
+      $app->get('/api/expense-limits/{id}', [ApiController::class, 'getExpenseLimitById'])->add(AuthRequiredMiddleware::class);
 }
