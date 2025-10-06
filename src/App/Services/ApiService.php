@@ -58,12 +58,21 @@ class ApiService
 
       // Zwróć null jeśli nie znaleziono
       if (!$limit) {
-         return null;
+
+         $limit = $this->db->query(
+            "SELECT expense_limit FROM expenses_category_assigned_to_users WHERE id = :category_id",
+            [
+               'category_id' => $categoryId
+            ]
+         )->find();
+         return [
+            'expense_limit' => $limit['expense_limit'] ? (float) $limit['expense_limit'] : null,
+         ];
       }
 
       // Formatuj dane
       return [
-         'expense_limit' => $limit['expense_limit'] ? (float) $limit['expense_limit'] : null,
+         'expense_limit' => $limit['expense_limit'] ? (float) $limit['expense_limit'] : 0,
          'limit_used' => $limit['limit_used'] ? (float) $limit['limit_used'] : null
       ];
    }
