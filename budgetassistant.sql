@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Wrz 16, 2025 at 09:21 PM
+-- Generation Time: Paź 09, 2025 at 12:54 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -32,12 +32,10 @@ CREATE TABLE `expenses` (
   `user_id` int(11) UNSIGNED NOT NULL,
   `expense_category_assigned_to_user_id` int(11) UNSIGNED NOT NULL,
   `payment_method_assigned_to_user_id` int(11) UNSIGNED NOT NULL,
-  `amount` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `amount` float(8,2) NOT NULL DEFAULT 0.00,
   `date_of_expense` date NOT NULL,
   `expense_comment` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
--- --------------------------------------------------------
 
 --
 -- Struktura tabeli dla tabeli `expenses_category_assigned_to_users`
@@ -47,10 +45,8 @@ CREATE TABLE `expenses_category_assigned_to_users` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL,
-  `expense_limit` int(11) DEFAULT NULL
+  `expense_limit` float(8,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
--- --------------------------------------------------------
 
 --
 -- Struktura tabeli dla tabeli `expenses_category_default`
@@ -66,22 +62,22 @@ CREATE TABLE `expenses_category_default` (
 --
 
 INSERT INTO `expenses_category_default` (`id`, `name`) VALUES
-(1, 'Food'),
-(2, 'Fuel'),
-(3, 'City transport'),
+(1, 'Jedzenie'),
+(2, 'Paliwo'),
+(3, 'Transport Miejski'),
 (4, 'Taxi'),
-(5, 'Fun'),
-(6, 'Health'),
-(7, 'Clothes'),
-(8, 'Hygiene'),
-(9, 'Kids'),
-(10, 'Recreation'),
-(11, 'Travel'),
-(12, 'Savings'),
-(13, 'For pension'),
-(14, 'Debt repayment'),
-(15, 'Presents'),
-(16, 'Another');
+(5, 'Rozrywka'),
+(6, 'Zdrowie'),
+(7, 'Odzież'),
+(8, 'Higiena'),
+(9, 'Dzieci'),
+(10, 'Rekreacja'),
+(11, 'Podróże'),
+(12, 'Oszczędności'),
+(13, 'Emerytura'),
+(14, 'Spłata kredytu'),
+(15, 'Prezenty'),
+(16, 'Inne');
 
 -- --------------------------------------------------------
 
@@ -110,8 +106,6 @@ CREATE TABLE `incomes_category_assigned_to_users` (
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
--- --------------------------------------------------------
-
 --
 -- Struktura tabeli dla tabeli `incomes_category_default`
 --
@@ -126,10 +120,10 @@ CREATE TABLE `incomes_category_default` (
 --
 
 INSERT INTO `incomes_category_default` (`id`, `name`) VALUES
-(1, 'Paycheck'),
-(2, 'Investments'),
-(3, 'Passive income'),
-(4, 'Another');
+(1, 'Wynagrodzenie za pracę'),
+(2, 'Inwestycje'),
+(3, 'Dochód pasywny'),
+(4, 'Inne');
 
 -- --------------------------------------------------------
 
@@ -142,8 +136,6 @@ CREATE TABLE `payment_methods_assigned_to_users` (
   `user_id` int(11) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
--- --------------------------------------------------------
 
 --
 -- Struktura tabeli dla tabeli `payment_methods_default`
@@ -159,9 +151,9 @@ CREATE TABLE `payment_methods_default` (
 --
 
 INSERT INTO `payment_methods_default` (`id`, `name`) VALUES
-(1, 'Debit card'),
-(2, 'Cash'),
-(3, 'Credit card');
+(1, 'Karta debetowa'),
+(2, 'Gotówka'),
+(3, 'Karta kredytowa');
 
 -- --------------------------------------------------------
 
@@ -250,55 +242,55 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `expenses_category_assigned_to_users`
 --
 ALTER TABLE `expenses_category_assigned_to_users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `expenses_category_default`
 --
 ALTER TABLE `expenses_category_default`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `incomes`
 --
 ALTER TABLE `incomes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `incomes_category_assigned_to_users`
 --
 ALTER TABLE `incomes_category_assigned_to_users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `incomes_category_default`
 --
 ALTER TABLE `incomes_category_default`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `payment_methods_assigned_to_users`
 --
 ALTER TABLE `payment_methods_assigned_to_users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `payment_methods_default`
 --
 ALTER TABLE `payment_methods_default`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints for dumped tables

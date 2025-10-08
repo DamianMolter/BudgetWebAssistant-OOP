@@ -42,9 +42,18 @@ class ApiService
    public function getExpenseLimitById(int $categoryId)
    {
       $firstDayOfMonth = date('Y-m-01');
-      $limit = $this->db->query(
-         "SELECT expense_limit, SUM(amount) AS limit_used FROM `expenses` 
-            INNER JOIN expenses_category_assigned_to_users ON expenses.expense_category_assigned_to_user_id=expenses_category_assigned_to_users.id 
+
+      $expenseLimit = $this->db->query(
+         "SELECT expense_limit FROM expenses_category_assigned_to_users 
+            WHERE user_id = :user_id AND id = :category_id",
+         [
+            'user_id' => $_SESSION['user'],
+            'category_id' => $categoryId
+         ]
+      )->find();
+
+      $limitUsed = $this->db->query(
+         "SELECT SUM(amount) AS limit_used FROM `expenses` 
             WHERE expenses.user_id = :user_id 
             AND expenses.expense_category_assigned_to_user_id = :category_id
             AND expenses.date_of_expense >= :firstDayOfMonth
@@ -56,24 +65,10 @@ class ApiService
          ]
       )->find();
 
-      // Zwróć null jeśli nie znaleziono
-      if (!$limit) {
-
-         $limit = $this->db->query(
-            "SELECT expense_limit FROM expenses_category_assigned_to_users WHERE id = :category_id",
-            [
-               'category_id' => $categoryId
-            ]
-         )->find();
-         return [
-            'expense_limit' => $limit['expense_limit'] ? (float) $limit['expense_limit'] : null,
-         ];
-      }
-
       // Formatuj dane
       return [
-         'expense_limit' => $limit['expense_limit'] ? (float) $limit['expense_limit'] : 0,
-         'limit_used' => $limit['limit_used'] ? (float) $limit['limit_used'] : null
+         'expense_limit' => !empty($expenseLimit['expense_limit']) ? (float) $expenseLimit['expense_limit'] : 0,
+         'limit_used' => !empty($limitUsed['limit_used']) ? (float) $limitUsed['limit_used'] : 0
       ];
    }
 }
