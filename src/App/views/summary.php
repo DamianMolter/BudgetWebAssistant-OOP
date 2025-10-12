@@ -166,8 +166,26 @@
       </h6>
     </div>
     <div class="demo-container">
-      <button class="btn btn-primary btn-lg" data-bs-toggle="modal">Wskazówka od e-doradcy</button>
+      <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#aiAssist">Wskazówka od e-doradcy</button>
     </div>
+
+    <div class="modal fade" id="aiAssist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title fs-5" id="exampleModalLabel">
+              Rada od Twojego doradcy finansowego
+            </h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </main>
 
 
