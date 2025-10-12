@@ -186,6 +186,7 @@ p{
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 900;
   border: solid #004225;
+  
 }
 
 .btn-secondary{
@@ -228,6 +229,11 @@ p{
 div.return a{
   color:#004225;
 }
+
+.demo-container {
+            display: flex;
+            justify-content: center;
+        }
 
 @media(max-width: 1200px){
 

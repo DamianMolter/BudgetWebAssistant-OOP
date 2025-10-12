@@ -163,10 +163,13 @@
           echo 'Musisz popracować nad zarządzaniem finansami!';
         }
         ?>
-
       </h6>
     </div>
+    <div class="demo-container">
+      <button class="btn btn-primary btn-lg" data-bs-toggle="modal">Wskazówka od e-doradcy</button>
+    </div>
   </main>
+
 
   <hr />
   <aside>
