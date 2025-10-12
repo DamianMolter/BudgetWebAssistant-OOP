@@ -179,7 +179,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-
+            <p id="advice"></p>
           </div>
         </div>
       </div>
@@ -224,6 +224,33 @@
           expenseValues.push(singleExpenseValue);
         }
 
+        let advice = document.getElementById("advice");
+        advice = async () => {
+          try {
+            // Pobierz dane z API z categoryId jako parametr
+            const response = await fetch(`/advise`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            });
+
+            console.log(response);
+
+            if (!response.ok) {
+              throw new Error('Błąd pobierania danych limitu');
+            }
+
+            const data = await response.json();
+          } catch (error) {
+            console.error('Błąd podczas sprawdzania limitu:', error);
+            // Opcjonalnie można wyświetlić komunikat o błędzie
+            document.getElementById('limitAlert').style.display = 'none';
+          }
+        }
+
+
+
         new Chart("incomesChart", {
           type: "pie",
           data: {
@@ -258,6 +285,9 @@
           }
         });
       </script>
+
+
+
     </div>
   </aside>
   <?php include $this->resolve("partials/_footer.php"); ?>

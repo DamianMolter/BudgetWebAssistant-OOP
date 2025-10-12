@@ -68,4 +68,6 @@ class ApiController
          $limit
       );
    }
+
+   public function getFinancialAdvise() {}
 }
