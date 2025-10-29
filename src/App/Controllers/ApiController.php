@@ -69,5 +69,25 @@ class ApiController
       );
    }
 
-   public function getFinancialAdvise() {}
+   public function getFinancialAdvice()
+   {
+      // Pobierz dane JSON z body requesta
+      $jsonData = file_get_contents('php://input');
+      $data = json_decode($jsonData, true);
+
+      // Ustaw nagłówek JSON
+      header('Content-Type: application/json');
+
+      // Przetwórz dane
+
+      // Twoja logika biznesowa tutaj
+
+      // Zwróć odpowiedź
+      echo json_encode([
+         'success' => true,
+         'message' => 'Dane otrzymane',
+         'receivedData' => $data
+      ]);
+      exit;
+   }
 }

@@ -70,5 +70,5 @@ function registerRoutes(App $app)
       $app->setErrorHandler([ErrorController::class, 'notFound']);
       $app->get('/api/expense-limits', [ApiController::class, 'getExpenseLimits'])->add(AuthRequiredMiddleware::class);
       $app->get('/api/expense-limits/{id}', [ApiController::class, 'getExpenseLimitById'])->add(AuthRequiredMiddleware::class);
-      $app->get('/api/advise', [ApiController::class, 'getFinancialAdvise'])->add(AuthRequiredMiddleware::class);
+      $app->get('/api/advice/{query}', [ApiController::class, 'getFinancialAdvice'])->add(AuthRequiredMiddleware::class);
 }

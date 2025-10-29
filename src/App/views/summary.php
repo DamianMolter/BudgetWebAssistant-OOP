@@ -6,7 +6,7 @@
 
   <header>
     <div class="text-center pt-5">
-      <h1>Witaj <?php echo $userName; ?>, oto twój Bilans za okres: <?php echo $chosenPeriod; ?></h1>
+      <h1>Witaj <?php echo $userName; ?>, oto twój bilans za okres: <?php echo $chosenPeriod; ?></h1>
     </div>
   </header>
 
@@ -224,31 +224,6 @@
           expenseValues.push(singleExpenseValue);
         }
 
-        let advice = document.getElementById("advice");
-        advice = async () => {
-          try {
-            // Pobierz dane z API z categoryId jako parametr
-            const response = await fetch(`/advise`, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              }
-            });
-
-            console.log(response);
-
-            if (!response.ok) {
-              throw new Error('Błąd pobierania danych limitu');
-            }
-
-            const data = await response.json();
-          } catch (error) {
-            console.error('Błąd podczas sprawdzania limitu:', error);
-            // Opcjonalnie można wyświetlić komunikat o błędzie
-            document.getElementById('limitAlert').style.display = 'none';
-          }
-        }
-
 
 
         new Chart("incomesChart", {
@@ -282,6 +257,57 @@
               display: true,
               text: "Twoje wydatki"
             }
+          }
+        });
+
+        const modal = document.getElementById('aiAssist');
+        const adviceElement = document.getElementById('advice');
+
+        // Funkcja zbierająca dane finansowe
+
+        const incomesJSON = incomeNames.reduce((inc, incomeNames, index) => {
+          inc[incomeNames] = incomeValues[index];
+          return inc;
+        }, {});
+
+        const expensesJSON = expenseNames.reduce((exp, expenseNames, index) => {
+          exp[expenseNames] = expenseValues[index];
+          return exp;
+        }, {});
+
+        const chosenPeriod = document.querySelector("h1").textContent;
+
+        const synteticJSON = {
+          "incomes": incomesJSON,
+          "expenses": expensesJSON,
+          "timePeriod": chosenPeriod
+        };
+
+
+
+        // Pobieranie porady po otwarciu modala
+        modal.addEventListener('show.bs.modal', async function sendToAPI() {
+          try {
+
+            const query = JSON.stringify(synteticJSON);
+
+            const response = await fetch(`/api/advice/${query}`, {
+              method: 'GET',
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            const adviceElement = document.getElementById('advice');
+            adviceElement.textContent = data.message;
+
+            return data;
+
+          } catch (error) {
+            console.error('Błąd:', error);
           }
         });
       </script>

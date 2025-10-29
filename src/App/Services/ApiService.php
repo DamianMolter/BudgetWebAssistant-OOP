@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Framework\Database;
-use Framework\Exceptions\ValidationException;
+use GeminiAPI\Client;
+use GeminiAPI\Resources\ModelName;
+use GeminiAPI\Resources\Parts\TextPart;
 
 class ApiService
 {
@@ -70,5 +72,22 @@ class ApiService
          'expense_limit' => !empty($expenseLimit['expense_limit']) ? (float) $expenseLimit['expense_limit'] : 0,
          'limit_used' => !empty($limitUsed['limit_used']) ? (float) $limitUsed['limit_used'] : 0
       ];
+   }
+
+   public function generateAdviceWithAI($incomes, $expenses)
+   {
+      $apiKey = getenv('GEMINI_API_KEY'); // lub getenv('OPENAI_API_KEY')
+
+      $prompt = "Jesteś doradcą finansowym. Użytkownik ma:\n";
+      $prompt .= "Przychody: " . json_encode($incomes) . "\n";
+      $prompt .= "Wydatki: " . json_encode($expenses) . "\n";
+      $prompt .= "Daj krótką (max 3 zdania) poradę finansową po polsku. Nazwy kategorii przychodów i wydatków przetłumacz na język polski";
+
+      $client = new Client($apiKey);
+      $response = $client->generativeModel(ModelName::GEMINI_PRO)->generateContent(
+         new TextPart($prompt),
+      );
+
+      print $response->text();
    }
 }
