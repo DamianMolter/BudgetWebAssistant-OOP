@@ -14,7 +14,7 @@
     <div class="container">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Niestandardowy
+          Wybierz okres
         </button>
         <ul class="dropdown-menu">
           <li><a class="nav-link py-3" href="/summary">Bieżący miesiąc</a></li>
@@ -179,7 +179,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p id="advice"></p>
+            <div id="advice">
+              <p>Twój doradca analizuje Twój budżet, nie zamykaj okna...</p>
+            </div>
           </div>
         </div>
       </div>
@@ -289,11 +291,16 @@
         modal.addEventListener('show.bs.modal', async function sendToAPI() {
           try {
 
-            const query = JSON.stringify(synteticJSON);
+            const queryString = new URLSearchParams(
+              Object.entries(synteticJSON).reduce((acc, [key, value]) => {
+                acc[key] = typeof value === 'object' ? JSON.stringify(value) : value;
+                return acc;
+              }, {})
+            ).toString();
 
-            console.log(query);
+            console.log(queryString);
 
-            const response = await fetch(`/api/advice/${query}`, {
+            const response = await fetch(`/api/advice/${queryString}`, {
               method: 'GET',
             });
 
@@ -303,10 +310,10 @@
 
             const data = await response.json();
 
-            console.log(data);
+            console.log(data.message);
 
             const adviceElement = document.getElementById('advice');
-            adviceElement.textContent = data.message;
+            adviceElement.innerHTML = data.message;
 
             return data;
 

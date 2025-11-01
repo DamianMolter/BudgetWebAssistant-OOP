@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Framework\Database;
+use App\Config\Paths;
+use Dotenv\Dotenv;
 use GeminiAPI\Client;
 use GeminiAPI\Resources\ModelName;
 use GeminiAPI\Resources\Parts\TextPart;
@@ -74,20 +76,30 @@ class ApiService
       ];
    }
 
-   public function generateAdviceWithAI($incomes, $expenses)
+   public function generateAdviceWithAI($queryString)
    {
-      $apiKey = getenv('GEMINI_API_KEY'); // lub getenv('OPENAI_API_KEY')
 
-      $prompt = "Jesteś doradcą finansowym. Użytkownik ma:\n";
-      $prompt .= "Przychody: " . json_encode($incomes) . "\n";
-      $prompt .= "Wydatki: " . json_encode($expenses) . "\n";
-      $prompt .= "Daj krótką (max 3 zdania) poradę finansową po polsku. Nazwy kategorii przychodów i wydatków przetłumacz na język polski";
+      $dotenv = Dotenv::createImmutable(Paths::ROOT);
+      $dotenv->load();
 
-      $client = new Client($apiKey);
-      $response = $client->generativeModel(ModelName::GEMINI_PRO)->generateContent(
-         new TextPart($prompt),
-      );
+      $systemIntructions = 'Jesteś doświadczonym doradcą finansowym, poniżej otrzymasz informację, dotyczącą przychodów, wydatków oraz okres
+      czasu, w jakim wystąpiły. Wykorzystując swoją wiedzę, dokonaj analizy oraz przygotuj 3 jedno-zdaniowe porady, jak poprawić swoje zarządzanie finansami.
+      Nazwy kategorii przychodów i wydatków przetłumacz na język polski. Odpowiedź przygotuj z wykorzystaniem tagów html <p>';
 
-      print $response->text();
+      // Ustaw nagłówek JSON
+      header('Content-Type: application/json');
+
+      $client = new Client($_ENV['GEMINI_API_KEY']);
+
+      $response = $client->withV1BetaVersion()
+         ->generativeModel(ModelName::GEMINI_2_5_FLASH)
+         ->withSystemInstruction($systemIntructions)
+         ->generateContent(
+            new TextPart($queryString),
+         );
+
+      $text = $response->candidates[0]->content->parts[0]->text;
+
+      return $text;
    }
 }
