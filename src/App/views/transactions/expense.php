@@ -161,10 +161,8 @@
 
           // Sprawdź czy przekraczamy limit
           if (Number.isNaN(monthlyLimit) || monthlyLimit === 0) {
-            const excess = (totalAfterExpense - monthlyLimit).toFixed(2);
-            limitMessage.textContent = `⚠️ UWAGA! Miesięczny limit nie został ustalony!`;
-            limitMessage.className = 'error';
-          } else if (totalAfterExpense > monthlyLimit) {
+            limitMessage.textContent = null;
+          } else if (totalAfterExpense > monthlyLimit && (monthlyLimit != 0 || Number.isNaN(monthlyLimit))) {
             const excess = (totalAfterExpense - monthlyLimit).toFixed(2);
             limitMessage.textContent = `⚠️ UWAGA! Po dodaniu tego wydatku przekroczysz miesięczny limit o ${excess} zł (Limit: ${monthlyLimit.toFixed(2)} zł, Wykorzystano: ${usedAmount.toFixed(2)} zł)`;
             limitMessage.className = 'error';
