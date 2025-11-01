@@ -68,4 +68,21 @@ class ApiController
          $limit
       );
    }
+
+   public function getFinancialAdvice($params)
+   {
+
+      $queryString = $params['query'];
+
+      // Pobierz dane JSON z body requesta
+      $financialAdvice = $this->apiService->generateAdviceWithAI($queryString);
+
+      //dd($financialAdvice);
+
+      echo json_encode([
+         'success' => true,
+         'message' => $financialAdvice
+      ]);
+      exit;
+   }
 }

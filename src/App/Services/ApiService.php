@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Framework\Database;
-use Framework\Exceptions\ValidationException;
+use App\Config\Paths;
+use Dotenv\Dotenv;
+use GeminiAPI\Client;
+use GeminiAPI\Resources\ModelName;
+use GeminiAPI\Resources\Parts\TextPart;
 
 class ApiService
 {
@@ -70,5 +74,32 @@ class ApiService
          'expense_limit' => !empty($expenseLimit['expense_limit']) ? (float) $expenseLimit['expense_limit'] : 0,
          'limit_used' => !empty($limitUsed['limit_used']) ? (float) $limitUsed['limit_used'] : 0
       ];
+   }
+
+   public function generateAdviceWithAI($queryString)
+   {
+
+      $dotenv = Dotenv::createImmutable(Paths::ROOT);
+      $dotenv->load();
+
+      $systemIntructions = 'Jesteś doświadczonym doradcą finansowym, poniżej otrzymasz informację, dotyczącą przychodów, wydatków oraz okres
+      czasu, w jakim wystąpiły. Wykorzystując swoją wiedzę, dokonaj analizy oraz przygotuj 3 jedno-zdaniowe porady, jak poprawić swoje zarządzanie finansami.
+      Nazwy kategorii przychodów i wydatków przetłumacz na język polski. Odpowiedź przygotuj z wykorzystaniem tagów html <p>';
+
+      // Ustaw nagłówek JSON
+      header('Content-Type: application/json');
+
+      $client = new Client($_ENV['GEMINI_API_KEY']);
+
+      $response = $client->withV1BetaVersion()
+         ->generativeModel(ModelName::GEMINI_2_5_FLASH)
+         ->withSystemInstruction($systemIntructions)
+         ->generateContent(
+            new TextPart($queryString),
+         );
+
+      $text = $response->candidates[0]->content->parts[0]->text;
+
+      return $text;
    }
 }

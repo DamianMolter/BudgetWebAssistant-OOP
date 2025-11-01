@@ -6,7 +6,7 @@
 
   <header>
     <div class="text-center pt-5">
-      <h1>Witaj <?php echo $userName; ?>, oto twój Bilans za okres: <?php echo $chosenPeriod; ?></h1>
+      <h1>Witaj <?php echo $userName; ?>, oto twój bilans za okres: <?php echo $chosenPeriod; ?></h1>
     </div>
   </header>
 
@@ -14,7 +14,7 @@
     <div class="container">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Niestandardowy
+          Wybierz okres
         </button>
         <ul class="dropdown-menu">
           <li><a class="nav-link py-3" href="/summary">Bieżący miesiąc</a></li>
@@ -163,10 +163,33 @@
           echo 'Musisz popracować nad zarządzaniem finansami!';
         }
         ?>
-
       </h6>
     </div>
+    <div class="demo-container">
+      <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#aiAssist">Wskazówka od e-doradcy</button>
+    </div>
+
+    <div class="modal fade" id="aiAssist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title fs-5" id="exampleModalLabel">
+              Rada od Twojego doradcy finansowego
+            </h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="advice">
+              <p>Twój doradca analizuje Twój budżet, nie zamykaj okna...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </main>
+
 
   <hr />
   <aside>
@@ -203,6 +226,8 @@
           expenseValues.push(singleExpenseValue);
         }
 
+
+
         new Chart("incomesChart", {
           type: "pie",
           data: {
@@ -236,7 +261,70 @@
             }
           }
         });
+
+        const modal = document.getElementById('aiAssist');
+        const adviceElement = document.getElementById('advice');
+
+        // Funkcja zbierająca dane finansowe
+
+        const incomesJSON = incomeNames.reduce((inc, incomeNames, index) => {
+          inc[incomeNames] = incomeValues[index];
+          return inc;
+        }, {});
+
+        const expensesJSON = expenseNames.reduce((exp, expenseNames, index) => {
+          exp[expenseNames] = expenseValues[index];
+          return exp;
+        }, {});
+
+        const chosenPeriod = document.querySelector("h1").textContent;
+
+        const synteticJSON = {
+          "incomes": incomesJSON,
+          "expenses": expensesJSON,
+          "timePeriod": chosenPeriod
+        };
+
+
+
+        // Pobieranie porady po otwarciu modala
+        modal.addEventListener('show.bs.modal', async function sendToAPI() {
+          try {
+
+            const queryString = new URLSearchParams(
+              Object.entries(synteticJSON).reduce((acc, [key, value]) => {
+                acc[key] = typeof value === 'object' ? JSON.stringify(value) : value;
+                return acc;
+              }, {})
+            ).toString();
+
+            console.log(queryString);
+
+            const response = await fetch(`/api/advice/${queryString}`, {
+              method: 'GET',
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            console.log(data.message);
+
+            const adviceElement = document.getElementById('advice');
+            adviceElement.innerHTML = data.message;
+
+            return data;
+
+          } catch (error) {
+            console.error('Błąd:', error);
+          }
+        });
       </script>
+
+
+
     </div>
   </aside>
   <?php include $this->resolve("partials/_footer.php"); ?>
