@@ -7,7 +7,7 @@
   <div class="container">
     <main>
       <div class="py-5 text-center">
-        <h2>Dodaj wydatek</h2>
+        <h1>Dodaj wydatek</h1>
       </div>
 
       <?php if (isset($_SESSION['success'])) : ?>
@@ -24,7 +24,7 @@
 
       <div class="row g-5">
         <div class="col-md-12 col-lg-12 text-center">
-          <h4 class="mb-3">Szczegóły transakcji</h4>
+          <h2 class="mb-3">Szczegóły transakcji</h2>
           <form class="needs-validation" novalidate="" method="post">
             <?php include $this->resolve('partials/_csrf.php'); ?>
             <div class="row g-3 d-flex justify-content-center">

@@ -156,13 +156,6 @@
     <div class="container text-center py-5">
       <h6>
         Twój bilans wynosi <?php echo $finalBalance; ?> PLN!
-        <?php
-        if ($finalBalance >= 0) {
-          echo 'Gratulacje! Doskonale zarządzasz swoimi finansami!';
-        } else {
-          echo 'Musisz popracować nad zarządzaniem finansami!';
-        }
-        ?>
       </h6>
     </div>
     <div class="demo-container">

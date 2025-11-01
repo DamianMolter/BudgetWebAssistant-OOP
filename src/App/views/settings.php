@@ -5,9 +5,10 @@
       <?php include $this->resolve("partials/_navbar.php"); ?>
 
       <div class="container">
-            <div>
+            <div class="py-5 text-center">
+                  <h1>Ustawienia</h1>
                   <div class="py-5 text-center">
-                        <h6>Kategorie Przychodów</h6>
+                        <h2>Kategorie Przychodów</h2>
 
                         <?php if (array_key_exists('password', $errors)) : ?>
                               <span class='error'>
@@ -36,7 +37,7 @@
             </div>
             <div>
                   <div class="py-5 text-center">
-                        <h6>Kategorie Wydatków</h6>
+                        <h2>Kategorie Wydatków</h2>
                   </div>
 
                   <a href="/settings/add-expense-category">
@@ -63,7 +64,7 @@
 
             <div>
                   <div class="py-5 text-center">
-                        <h6>Kategorie Metod Płatności</h6>
+                        <h2>Kategorie Metod Płatności</h2>
                   </div>
 
                   <a href="/settings/add-payment-method">
@@ -85,7 +86,7 @@
 
             <div>
                   <div class="py-5 text-center">
-                        <h6>Twoje konto</h6>
+                        <h2>Twoje konto</h2>
                   </div>
                   <div>
                         <a href="/settings/user-account-settings">

@@ -12,12 +12,20 @@ div.dark-green{
   width: 100%;
 }
 
-h1, h2 {
+h1 {
   font-family: "Charm", cursive;
     font-weight: 400;
     font-style: normal;
-    font-size: 4rem;
+    font-size: 3rem;
     color: #004225;
+}
+
+h2{
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #004225;
+  font-size: 1,5rem;
 }
 
 body h3 {
@@ -214,7 +222,7 @@ p{
 }
 
 .blockquote p{
-  font-size: 2rem;;
+  font-size: 2rem;
 }
 
 #income-piechart, #expense-piechart{
@@ -238,8 +246,12 @@ div.return a{
 
 @media(max-width: 1200px){
 
-  h1, h2 {
+  h1 {
     font-size: 2.5rem;
+  }
+
+  h2{
+    font-size: 1.5rem;
   }
 
   .container.navbar{
@@ -257,4 +269,8 @@ div.return a{
   .container.chart{
     flex-direction: column;
   }
+
+  .blockquote p{
+  font-size: 1.5rem;
+}
 }
