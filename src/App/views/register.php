@@ -80,7 +80,7 @@
               <?php endif; ?>
               <label for="floatingPassword">Powtórz hasło</label>
             </div>
-            <button class="btn btn-primary px-5 btn-lg rounded-pill text-center mx-3" type="submit">
+            <button class="w-100 btn btn-primary btn-lg" type="submit">
               Zarejestruj się
             </button>
             <div class="return"><a href="/">
