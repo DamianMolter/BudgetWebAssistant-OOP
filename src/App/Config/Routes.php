@@ -71,4 +71,5 @@ function registerRoutes(App $app)
       $app->get('/api/expense-limits', [ApiController::class, 'getExpenseLimits'])->add(AuthRequiredMiddleware::class);
       $app->get('/api/expense-limits/{id}', [ApiController::class, 'getExpenseLimitById'])->add(AuthRequiredMiddleware::class);
       $app->get('/api/advice/{query}', [ApiController::class, 'getFinancialAdvice'])->add(AuthRequiredMiddleware::class);
+      $app->get('/api/advice', [ApiController::class, 'getFinancialAdvice'])->add(AuthRequiredMiddleware::class);
 }

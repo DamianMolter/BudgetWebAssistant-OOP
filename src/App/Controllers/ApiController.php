@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Services\ApiService;
+use App\Config\Paths;
+use Dotenv\Dotenv;
+use GeminiAPI\Client;
+use GeminiAPI\Resources\ModelName;
+use GeminiAPI\Resources\Parts\TextPart;
 
 class ApiController
 {
@@ -71,22 +76,31 @@ class ApiController
 
    public function getFinancialAdvice()
    {
+      $dotenv = Dotenv::createImmutable(Paths::ROOT);
+      $dotenv->load();
+
       // Pobierz dane JSON z body requesta
       $jsonData = file_get_contents('php://input');
-      $data = json_decode($jsonData, true);
+
+      dd($jsonData);
 
       // Ustaw nagłówek JSON
       header('Content-Type: application/json');
 
-      // Przetwórz dane
+      $client = new Client($_ENV['GEMINI_API_KEY']);
 
-      // Twoja logika biznesowa tutaj
+      $response = $client->withV1BetaVersion()
+         ->generativeModel(ModelName::GEMINI_2_5_FLASH)
+         ->withSystemInstruction('You are a cat. Your name is Neko.')
+         ->generateContent(
+            new TextPart('Powiedz coś miłego'),
+         );
 
-      // Zwróć odpowiedź
+      $text = $response->candidates[0]->content->parts[0]->text;
+
       echo json_encode([
          'success' => true,
-         'message' => 'Dane otrzymane',
-         'receivedData' => $data
+         'message' => $text
       ]);
       exit;
    }

@@ -291,6 +291,8 @@
 
             const query = JSON.stringify(synteticJSON);
 
+            console.log(query);
+
             const response = await fetch(`/api/advice/${query}`, {
               method: 'GET',
             });
@@ -300,6 +302,8 @@
             }
 
             const data = await response.json();
+
+            console.log(data);
 
             const adviceElement = document.getElementById('advice');
             adviceElement.textContent = data.message;
