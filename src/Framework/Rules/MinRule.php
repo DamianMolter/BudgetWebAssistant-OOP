@@ -11,7 +11,7 @@ class MinRule implements RuleInterface
 {
       public function validate(array $data, string $field, array $params): bool
       {
-            return $data['amount'] >= 0;
+            return is_numeric($data[$field]) && $data[$field] >= $params[0];
       }
       public function getMessage(array $data, string $field, array $params): string
       {
